@@ -1,9 +1,207 @@
 /* Copyright: Ankitects Pty Ltd and contributors
- * Material Design 3 Expressive Reviewer Bottom Bar
+ * Material Design 3 Expressive Reviewer Bottom Bar CSS
  * Compliant with Google M3 Expressive Design Specifications
  */
 
-@import "./m3-expressive.scss";
+:root {
+  /* M3 Expressive - Light Palette */
+  --m3-sys-color-primary: #005fb0;
+  --m3-sys-color-on-primary: #ffffff;
+  --m3-sys-color-primary-container: #d5e4ff;
+  --m3-sys-color-on-primary-container: #001d36;
+
+  --m3-sys-color-secondary: #545f71;
+  --m3-sys-color-on-secondary: #ffffff;
+  --m3-sys-color-secondary-container: #d8e3f8;
+  --m3-sys-color-on-secondary-container: #111c2b;
+
+  --m3-sys-color-tertiary: #6e5676;
+  --m3-sys-color-on-tertiary: #ffffff;
+  --m3-sys-color-tertiary-container: #f7d8ff;
+  --m3-sys-color-on-tertiary-container: #271430;
+
+  --m3-sys-color-error: #ba1a1a;
+  --m3-sys-color-on-error: #ffffff;
+  --m3-sys-color-error-container: #ffdad6;
+  --m3-sys-color-on-error-container: #410002;
+
+  --m3-sys-color-surface: #faf8ff;
+  --m3-sys-color-surface-dim: #dbd9e0;
+  --m3-sys-color-surface-bright: #faf8ff;
+  --m3-sys-color-surface-container-lowest: #ffffff;
+  --m3-sys-color-surface-container-low: #f4f2fa;
+  --m3-sys-color-surface-container: #eeeaf4;
+  --m3-sys-color-surface-container-high: #e8e4ee;
+  --m3-sys-color-surface-container-highest: #e2dfe8;
+
+  --m3-sys-color-on-surface: #1a1b21;
+  --m3-sys-color-on-surface-variant: #44474f;
+  --m3-sys-color-outline: #74777f;
+  --m3-sys-color-outline-variant: #c4c6d0;
+
+  /* Expressive Study Mastery Tokens (Light) */
+  --m3-ease-1-bg: #ffdad6;
+  --m3-ease-1-fg: #410002;
+  --m3-ease-1-border: rgba(186, 26, 26, 0.24);
+  --m3-ease-1-kbd: #ba1a1a;
+  --m3-ease-1-kbd-bg: rgba(255, 255, 255, 0.85);
+
+  --m3-ease-2-bg: #ffe0bf;
+  --m3-ease-2-fg: #432400;
+  --m3-ease-2-border: rgba(135, 82, 0, 0.24);
+  --m3-ease-2-kbd: #875200;
+  --m3-ease-2-kbd-bg: rgba(255, 255, 255, 0.85);
+
+  --m3-ease-3-bg: #d5e4ff;
+  --m3-ease-3-fg: #002b4f;
+  --m3-ease-3-border: rgba(0, 95, 176, 0.24);
+  --m3-ease-3-kbd: #005fb0;
+  --m3-ease-3-kbd-bg: rgba(255, 255, 255, 0.85);
+
+  --m3-ease-4-bg: #b6f2bd;
+  --m3-ease-4-fg: #00391c;
+  --m3-ease-4-border: rgba(0, 110, 59, 0.24);
+  --m3-ease-4-kbd: #006e3b;
+  --m3-ease-4-kbd-bg: rgba(255, 255, 255, 0.85);
+
+  /* Expressive Typography Scale */
+  --m3-font-family: -apple-system, BlinkMacSystemFont, "Google Sans", "Google Sans Text", Roboto, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+
+  /* Expressive Motion & Spring Physics */
+  --m3-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --m3-easing-spring-snappy: cubic-bezier(0.2, 0, 0, 1);
+  --m3-duration-short: 160ms;
+  --m3-duration-medium: 260ms;
+  --m3-duration-long: 400ms;
+
+  /* Expressive Shapes */
+  --m3-shape-pill: 9999px;
+  --m3-shape-card: 20px;
+  --m3-shape-card-large: 26px;
+  --m3-shape-small: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --m3-sys-color-primary: #a1c9ff;
+    --m3-sys-color-on-primary: #00315f;
+    --m3-sys-color-primary-container: #004786;
+    --m3-sys-color-on-primary-container: #d5e4ff;
+
+    --m3-sys-color-secondary: #bcc7db;
+    --m3-sys-color-on-secondary: #263141;
+    --m3-sys-color-secondary-container: #3d4758;
+    --m3-sys-color-on-secondary-container: #d8e3f8;
+
+    --m3-sys-color-tertiary: #dabde2;
+    --m3-sys-color-on-tertiary: #3d2846;
+    --m3-sys-color-tertiary-container: #553e5d;
+    --m3-sys-color-on-tertiary-container: #f7d8ff;
+
+    --m3-sys-color-error: #ffb4ab;
+    --m3-sys-color-on-error: #690005;
+    --m3-sys-color-error-container: #93000a;
+    --m3-sys-color-on-error-container: #ffdad6;
+
+    --m3-sys-color-surface: #121318;
+    --m3-sys-color-surface-dim: #121318;
+    --m3-sys-color-surface-bright: #38393f;
+    --m3-sys-color-surface-container-lowest: #0d0e13;
+    --m3-sys-color-surface-container-low: #1a1b21;
+    --m3-sys-color-surface-container: #1e1f25;
+    --m3-sys-color-surface-container-high: #292a30;
+    --m3-sys-color-surface-container-highest: #34343b;
+
+    --m3-sys-color-on-surface: #e2dfe8;
+    --m3-sys-color-on-surface-variant: #c4c6d0;
+    --m3-sys-color-outline: #8e9099;
+    --m3-sys-color-outline-variant: #44474f;
+
+    --m3-ease-1-bg: #5a0006;
+    --m3-ease-1-fg: #ffdad6;
+    --m3-ease-1-border: rgba(255, 180, 171, 0.35);
+    --m3-ease-1-kbd: #ffb4ab;
+    --m3-ease-1-kbd-bg: rgba(0, 0, 0, 0.45);
+
+    --m3-ease-2-bg: #522b00;
+    --m3-ease-2-fg: #ffe0bf;
+    --m3-ease-2-border: rgba(255, 184, 112, 0.35);
+    --m3-ease-2-kbd: #ffb870;
+    --m3-ease-2-kbd-bg: rgba(0, 0, 0, 0.45);
+
+    --m3-ease-3-bg: #003a6b;
+    --m3-ease-3-fg: #d5e4ff;
+    --m3-ease-3-border: rgba(161, 201, 255, 0.35);
+    --m3-ease-3-kbd: #a1c9ff;
+    --m3-ease-3-kbd-bg: rgba(0, 0, 0, 0.45);
+
+    --m3-ease-4-bg: #004b27;
+    --m3-ease-4-fg: #b6f2bd;
+    --m3-ease-4-border: rgba(108, 218, 143, 0.35);
+    --m3-ease-4-kbd: #6cda8f;
+    --m3-ease-4-kbd-bg: rgba(0, 0, 0, 0.45);
+  }
+}
+
+body.nightMode, body.night-mode, .nightMode, .night-mode, [data-theme="dark"] {
+  --m3-sys-color-primary: #a1c9ff;
+  --m3-sys-color-on-primary: #00315f;
+  --m3-sys-color-primary-container: #004786;
+  --m3-sys-color-on-primary-container: #d5e4ff;
+
+  --m3-sys-color-secondary: #bcc7db;
+  --m3-sys-color-on-secondary: #263141;
+  --m3-sys-color-secondary-container: #3d4758;
+  --m3-sys-color-on-secondary-container: #d8e3f8;
+
+  --m3-sys-color-tertiary: #dabde2;
+  --m3-sys-color-on-tertiary: #3d2846;
+  --m3-sys-color-tertiary-container: #553e5d;
+  --m3-sys-color-on-tertiary-container: #f7d8ff;
+
+  --m3-sys-color-error: #ffb4ab;
+  --m3-sys-color-on-error: #690005;
+  --m3-sys-color-error-container: #93000a;
+  --m3-sys-color-on-error-container: #ffdad6;
+
+  --m3-sys-color-surface: #121318;
+  --m3-sys-color-surface-dim: #121318;
+  --m3-sys-color-surface-bright: #38393f;
+  --m3-sys-color-surface-container-lowest: #0d0e13;
+  --m3-sys-color-surface-container-low: #1a1b21;
+  --m3-sys-color-surface-container: #1e1f25;
+  --m3-sys-color-surface-container-high: #292a30;
+  --m3-sys-color-surface-container-highest: #34343b;
+
+  --m3-sys-color-on-surface: #e2dfe8;
+  --m3-sys-color-on-surface-variant: #c4c6d0;
+  --m3-sys-color-outline: #8e9099;
+  --m3-sys-color-outline-variant: #44474f;
+
+  --m3-ease-1-bg: #5a0006;
+  --m3-ease-1-fg: #ffdad6;
+  --m3-ease-1-border: rgba(255, 180, 171, 0.35);
+  --m3-ease-1-kbd: #ffb4ab;
+  --m3-ease-1-kbd-bg: rgba(0, 0, 0, 0.45);
+
+  --m3-ease-2-bg: #522b00;
+  --m3-ease-2-fg: #ffe0bf;
+  --m3-ease-2-border: rgba(255, 184, 112, 0.35);
+  --m3-ease-2-kbd: #ffb870;
+  --m3-ease-2-kbd-bg: rgba(0, 0, 0, 0.45);
+
+  --m3-ease-3-bg: #003a6b;
+  --m3-ease-3-fg: #d5e4ff;
+  --m3-ease-3-border: rgba(161, 201, 255, 0.35);
+  --m3-ease-3-kbd: #a1c9ff;
+  --m3-ease-3-kbd-bg: rgba(0, 0, 0, 0.45);
+
+  --m3-ease-4-bg: #004b27;
+  --m3-ease-4-fg: #b6f2bd;
+  --m3-ease-4-border: rgba(108, 218, 143, 0.35);
+  --m3-ease-4-kbd: #6cda8f;
+  --m3-ease-4-kbd-bg: rgba(0, 0, 0, 0.45);
+}
 
 * {
   box-sizing: border-box;
@@ -234,7 +432,6 @@ body.nightMode .review-count, body.night-mode .review-count { color: #6cda8f; }
 
 /* ==========================================================================
    4 Mastery Option Buttons (Again, Hard, Good, Easy) - Material Design 3 Expressive
-   Large, prominent, spacious, and responsive
    ========================================================================== */
 
 #middle table {
@@ -281,7 +478,7 @@ body.nightMode .review-count, body.night-mode .review-count { color: #6cda8f; }
   width: 100%;
 }
 
-/* Large Expressive Card Button (Applies to both modern and legacy markup) */
+/* Large Expressive Card Button (Universal) */
 #middle td button,
 #middle button[data-ease],
 .m3-ease-btn {
@@ -495,7 +692,7 @@ body.nightMode .review-count, body.night-mode .review-count { color: #6cda8f; }
 }
 
 /* ==========================================================================
-   Screen Shake Animation & Milestone Celebration (Inspired by 绿宝书 fx.js)
+   Screen Shake Animation & Milestone Celebration
    ========================================================================== */
 
 .m3-shake {

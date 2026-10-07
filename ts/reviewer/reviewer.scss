@@ -106,24 +106,45 @@ button {
     text-decoration: none;
     display: inline-flex;
     vertical-align: middle;
-    margin: 3px;
+    margin: 4px;
+    border-radius: 9999px;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+
+    &:hover {
+        transform: scale(1.08);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    }
+
+    &:active {
+        transform: scale(0.96);
+    }
 
     svg {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
 
         circle {
             fill: #fff;
-            stroke: #414141;
+            stroke: #005fb0;
+            stroke-width: 1.5;
         }
 
         path {
-            fill: #414141;
+            fill: #005fb0;
         }
     }
 }
 
 .nightMode {
+    .replay-button svg {
+        circle {
+            fill: #1e1f25;
+            stroke: #a1c9ff;
+        }
+        path {
+            fill: #a1c9ff;
+        }
+    }
     .latex {
         filter: invert(100%);
     }

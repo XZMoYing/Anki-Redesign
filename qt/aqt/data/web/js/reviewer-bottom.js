@@ -1,19 +1,13 @@
 /* Copyright: Ankitects Pty Ltd and contributors
- * Material Design 3 Expressive Reviewer Bottom Bar Script
+ * Material Design 3 Expressive Reviewer Bottom Bar Script (Compiled JS)
  * Enhanced with responsive keyboard shortcuts, spring interactions, and milestone encouragement fx
  */
 
-/* eslint
-@typescript-eslint/no-unused-vars: "off",
-*/
-
-declare function pycmd(cmd: string): void;
-
-let time: number; // set in python code
+let time; // set in python code
 let timerStopped = false;
 let maxTime = 0;
 
-function updateTime(): void {
+function updateTime() {
     const timeNode = document.getElementById("time");
     if (!timeNode) return;
     if (maxTime === 0) {
@@ -33,9 +27,9 @@ function updateTime(): void {
     }
 }
 
-let intervalId: number | undefined;
+let intervalId;
 
-function showQuestion(txt: string, maxTime_: number): void {
+function showQuestion(txt, maxTime_) {
     showAnswer(txt);
     time = 0;
     maxTime = maxTime_;
@@ -53,7 +47,7 @@ function showQuestion(txt: string, maxTime_: number): void {
     }, 1000);
 }
 
-function showAnswer(txt: string, stopTimer = false): void {
+function showAnswer(txt, stopTimer = false) {
     const middle = document.getElementById("middle");
     if (middle) {
         middle.innerHTML = txt;
@@ -62,8 +56,8 @@ function showAnswer(txt: string, stopTimer = false): void {
     setupEaseButtonEvents();
 }
 
-function selectedAnswerButton(): string | undefined {
-    const node = document.activeElement as HTMLElement;
+function selectedAnswerButton() {
+    const node = document.activeElement;
     if (!node) {
         return undefined;
     }
@@ -76,8 +70,7 @@ function selectedAnswerButton(): string | undefined {
 
 let sessionCardCount = parseInt(sessionStorage.getItem("m3_session_reviewed") || "0", 10);
 
-function triggerScreenShake(): void {
-    // Check if user disabled shake in localStorage or OS prefers reduced motion
+function triggerScreenShake() {
     const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const shakeDisabled = localStorage.getItem("m3_shake_disabled") === "true";
     if (prefersReducedMotion || shakeDisabled) return;
@@ -92,7 +85,7 @@ function triggerScreenShake(): void {
     }, 300);
 }
 
-function showMilestoneToast(msg: string): void {
+function showMilestoneToast(msg) {
     let banner = document.getElementById("m3-milestone-banner");
     if (!banner) {
         banner = document.createElement("div");
@@ -111,26 +104,11 @@ function showMilestoneToast(msg: string): void {
 }
 
 /* Canvas Confetti Particles */
-interface Particle {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    gravity: number;
-    size: number;
-    color: string;
-    life: number;
-    decay: number;
-    shape: "rect" | "circle";
-    rot: number;
-    vrot: number;
-}
+let particles = [];
+let animFrame = null;
 
-let particles: Particle[] = [];
-let animFrame: number | null = null;
-
-function burstParticles(): void {
-    const canvas = document.getElementById("m3-confetti-canvas") as HTMLCanvasElement;
+function burstParticles() {
+    const canvas = document.getElementById("m3-confetti-canvas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -200,11 +178,11 @@ function burstParticles(): void {
     }
 }
 
-function handleMilestoneReward(): void {
+function handleMilestoneReward() {
     sessionCardCount++;
     sessionStorage.setItem("m3_session_reviewed", String(sessionCardCount));
 
-    // Milestone encouragement milestones: 5, 10, 20, 30, 50, 100...
+    // Milestones at 5, 10, 20, 30, 50, 100...
     if (sessionCardCount === 5 || sessionCardCount % 10 === 0) {
         triggerScreenShake();
         burstParticles();
@@ -219,8 +197,8 @@ function handleMilestoneReward(): void {
     }
 }
 
-function setupEaseButtonEvents(): void {
-    const buttons = document.querySelectorAll<HTMLButtonElement>(".m3-ease-btn");
+function setupEaseButtonEvents() {
+    const buttons = document.querySelectorAll(".m3-ease-btn");
     buttons.forEach(btn => {
         btn.addEventListener("click", () => {
             handleMilestoneReward();
@@ -230,17 +208,10 @@ function setupEaseButtonEvents(): void {
 
 /* ==========================================================================
    Full Keyboard Shortcuts & Accessibility Handler
-   Ensures EVERY button and ease choice can be controlled via keyboard:
-   - 1, 2, 3, 4: Again, Hard, Good, Easy
-   - Space / Enter: Show Answer (or Good if showing answer)
-   - E: Edit card
-   - M: More options menu
-   - U / Z: Undo
    ========================================================================== */
 
-window.addEventListener("keydown", (e: KeyboardEvent) => {
-    // Avoid intercepting when focused in text inputs
-    const target = e.target as HTMLElement;
+window.addEventListener("keydown", (e) => {
+    const target = e.target;
     if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
         return;
     }
@@ -249,7 +220,7 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
 
     // Keys 1, 2, 3, 4 for Mastery Degrees
     if (key === "1" || key === "2" || key === "3" || key === "4") {
-        const easeBtn = document.querySelector<HTMLButtonElement>(`button[data-ease="${key}"]`);
+        const easeBtn = document.querySelector(`button[data-ease="${key}"]`);
         if (easeBtn) {
             e.preventDefault();
             easeBtn.click();
@@ -259,14 +230,13 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
 
     // Space or Enter for Show Answer
     if (key === " " || key === "Enter") {
-        const ansBtn = document.getElementById("ansbut") as HTMLButtonElement;
+        const ansBtn = document.getElementById("ansbut");
         if (ansBtn) {
             e.preventDefault();
             ansBtn.click();
             return;
         }
-        // If ease buttons are visible and Enter is pressed, trigger default ease
-        const defaultEase = document.getElementById("defease") as HTMLButtonElement;
+        const defaultEase = document.getElementById("defease");
         if (defaultEase) {
             e.preventDefault();
             defaultEase.click();
@@ -276,7 +246,7 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
 
     // E: Edit Current Card
     if (key === "e" || key === "E") {
-        const editBtn = document.querySelector<HTMLButtonElement>(".m3-btn-edit");
+        const editBtn = document.querySelector(".m3-btn-edit");
         if (editBtn) {
             e.preventDefault();
             editBtn.click();
@@ -286,7 +256,7 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
 
     // M: More Options Menu
     if (key === "m" || key === "M") {
-        const moreBtn = document.querySelector<HTMLButtonElement>(".m3-btn-more");
+        const moreBtn = document.querySelector(".m3-btn-more");
         if (moreBtn) {
             e.preventDefault();
             moreBtn.click();
@@ -296,7 +266,7 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
 
     // Arrow keys navigation between ease buttons
     if (key === "ArrowLeft" || key === "ArrowRight") {
-        const easeBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".m3-ease-btn"));
+        const easeBtns = Array.from(document.querySelectorAll(".m3-ease-btn"));
         if (easeBtns.length > 0) {
             const currentIndex = easeBtns.findIndex(btn => btn === document.activeElement);
             if (currentIndex === -1) {
@@ -312,7 +282,6 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
     }
 });
 
-// Initial binding
 document.addEventListener("DOMContentLoaded", () => {
     setupEaseButtonEvents();
 });

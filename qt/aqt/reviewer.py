@@ -816,22 +816,32 @@ class Reviewer:
 
     def _bottomHTML(self) -> str:
         return """
-<center id=outer>
-<table id=innertable width=100%% cellspacing=0 cellpadding=0>
-<tr>
-<td align=start valign=top class=stat>
-<button title="%(editkey)s" onclick="pycmd('edit');">%(edit)s</button></td>
-<td align=center valign=top id=middle>
-</td>
-<td align=end valign=top class=stat>
-<button title="%(morekey)s" onclick="pycmd('more');">
-%(more)s %(downArrow)s
-<span id=time class=stattxt></span>
-</button>
-</td>
-</tr>
-</table>
-</center>
+<div id="outer" class="m3-reviewer-outer">
+  <div id="innertable" class="m3-reviewer-bar">
+    <div class="m3-bar-side m3-bar-left stat">
+      <button class="m3-pill-btn m3-btn-edit" title="%(editkey)s" onclick="pycmd('edit');" tabindex="0">
+        <span class="m3-btn-icon">✎</span>
+        <span class="m3-btn-text">%(edit)s</span>
+        <kbd class="m3-kbd">E</kbd>
+      </button>
+    </div>
+    <div id="middle" class="m3-bar-middle">
+    </div>
+    <div class="m3-bar-side m3-bar-right stat">
+      <div id="m3-timer-wrapper" class="m3-timer-chip">
+        <span class="m3-time-icon">⏱</span>
+        <span id="time" class="stattxt"></span>
+      </div>
+      <button class="m3-pill-btn m3-btn-more" title="%(morekey)s" onclick="pycmd('more');" tabindex="0">
+        <span class="m3-btn-text">%(more)s</span>
+        <kbd class="m3-kbd">M</kbd>
+        <span class="m3-arrow">%(downArrow)s</span>
+      </button>
+    </div>
+  </div>
+</div>
+<canvas id="m3-confetti-canvas" class="m3-confetti-canvas"></canvas>
+<div id="m3-milestone-banner" class="m3-milestone-banner"></div>
 <script>
 time = %(time)d;
 timerStopped = false;
@@ -846,16 +856,19 @@ timerStopped = false;
         )
 
     def _showAnswerButton(self) -> None:
+        space_key = tr.actions_shortcut_key(val=tr.studying_space())
         middle = """
-<button title="{}" id="ansbut" onclick='pycmd("ans");'>{}<span class=stattxt>{}</span></button>""".format(
-            tr.actions_shortcut_key(val=tr.studying_space()),
-            tr.studying_show_answer(),
+<div class="m3-show-ans-wrapper">
+  <div class="m3-remaining-counts">{}</div>
+  <button id="ansbut" class="m3-show-ans-btn" title="{}" onclick='pycmd("ans");' tabindex="0">
+    <span class="m3-show-ans-label">{}</span>
+    <kbd class="m3-kbd m3-kbd-space">{}</kbd>
+  </button>
+</div>""".format(
             self._remaining(),
-        )
-        # wrap it in a table so it has the same top margin as the ease buttons
-        middle = (
-            "<table cellpadding=0><tr><td class=stat2 align=center>%s</td></tr></table>"
-            % middle
+            space_key,
+            tr.studying_show_answer(),
+            tr.studying_space(),
         )
         if self.card.should_show_timer():
             maxTime = self.card.time_limit() / 1000
@@ -928,27 +941,39 @@ timerStopped = false;
             else:
                 extra = ""
             due = self._buttonTime(i, v3_labels=labels)
-            key = (
-                tr.actions_shortcut_key(val=aqt.mw.pm.get_answer_key(i))
-                if aqt.mw.pm.get_answer_key(i)
+            raw_key = aqt.mw.pm.get_answer_key(i) or str(i)
+            key_title = (
+                tr.actions_shortcut_key(val=raw_key)
+                if raw_key
                 else ""
             )
             return """
-<td align=center><button %s title="%s" data-ease="%s" onclick='pycmd("ease%d");'>\
-%s%s</button></td>""" % (
+<div class="m3-ease-col">
+  <button %s class="m3-ease-btn m3-ease-btn-%d" title="%s" data-ease="%d" onclick='pycmd("ease%d");' tabindex="0">
+    <div class="m3-ease-card-inner">
+      <div class="m3-ease-header">
+        <span class="m3-ease-due">%s</span>
+        <kbd class="m3-kbd">%s</kbd>
+      </div>
+      <div class="m3-ease-body">
+        <span class="m3-ease-label">%s</span>
+      </div>
+    </div>
+  </button>
+</div>""" % (
                 extra,
-                key,
+                i,
+                key_title,
                 i,
                 i,
-                label,
                 due,
+                raw_key,
+                label,
             )
 
-        buf = "<center><table cellpadding=0 cellspacing=0><tr>"
-        for ease, label in self._answerButtonList():
-            buf += but(ease, label)
-        buf += "</tr></table>"
-        return buf
+        btn_list = self._answerButtonList()
+        buttons_html = "".join(but(ease, label) for ease, label in btn_list)
+        return '<div class="m3-ease-grid m3-ease-grid-%d">%s</div>' % (len(btn_list), buttons_html)
 
     def _buttonTime(self, i: int, v3_labels: Sequence[str]) -> str:
         if self.mw.col.conf["estTimes"]:

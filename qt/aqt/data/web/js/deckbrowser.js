@@ -1,17 +1,14 @@
 /* Copyright: Ankitects Pty Ltd and contributors
- * Material Design 3 Expressive Deck Browser Script
+ * Material Design 3 Expressive Deck Browser Script (Compiled JS)
  * Enhanced with keyboard shortcuts and drag-and-drop
  */
-
-declare function pycmd(cmd: string): void;
-declare let $: any;
 
 $(init);
 
 function init() {
     $("tr.deck").draggable({
         scroll: false,
-        helper: function(_event: any) {
+        helper: function(_event) {
             return $(this).clone(false);
         },
         delay: 200,
@@ -29,7 +26,7 @@ function init() {
     setupDeckBrowserShortcuts();
 }
 
-function handleDropEvent(this: any, event: any, ui: any) {
+function handleDropEvent(event, ui) {
     const draggedDeckId = ui.draggable.attr("id");
     const ontoDeckId = $(this).attr("id") || "";
 
@@ -37,33 +34,28 @@ function handleDropEvent(this: any, event: any, ui: any) {
 }
 
 function setupDeckBrowserShortcuts() {
-    window.addEventListener("keydown", (e: KeyboardEvent) => {
-        const target = e.target as HTMLElement;
+    window.addEventListener("keydown", (e) => {
+        const target = e.target;
         if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
             return;
         }
 
         const key = e.key;
 
-        // 's' / 'S' -> Get Shared Decks
         if (key === "s" || key === "S") {
-            const sharedBtn = document.querySelector<HTMLButtonElement>(".m3-action-shared");
+            const sharedBtn = document.querySelector(".m3-action-shared");
             if (sharedBtn) {
                 e.preventDefault();
                 sharedBtn.click();
             }
-        }
-        // 'c' / 'C' -> Create Deck
-        else if (key === "c" || key === "C") {
-            const createBtn = document.querySelector<HTMLButtonElement>(".m3-action-create");
+        } else if (key === "c" || key === "C") {
+            const createBtn = document.querySelector(".m3-action-create");
             if (createBtn) {
                 e.preventDefault();
                 createBtn.click();
             }
-        }
-        // 'i' / 'I' -> Import
-        else if (key === "i" || key === "I") {
-            const importBtn = document.querySelector<HTMLButtonElement>(".m3-action-import");
+        } else if (key === "i" || key === "I") {
+            const importBtn = document.querySelector(".m3-action-import");
             if (importBtn) {
                 e.preventDefault();
                 importBtn.click();

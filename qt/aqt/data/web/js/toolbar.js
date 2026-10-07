@@ -1,45 +1,33 @@
 // Copyright: Ankitects Pty Ltd and contributors
-// Material Design 3 Expressive Top Navigation Bar Script
+// Material Design 3 Expressive Top Navigation Bar Script (Compiled JS)
 // Enhanced with keyboard shortcuts and legacy addon handling
 
-/* eslint
-@typescript-eslint/no-unused-vars: "off",
-*/
-
-declare function pycmd(cmd: string): void;
-
-enum SyncState {
-    NoChanges = 0,
-    Normal,
-    Full,
-}
-
-function updateSyncColor(state: SyncState) {
+function updateSyncColor(state) {
     const elem = document.getElementById("sync");
     if (!elem) return;
     switch (state) {
-        case SyncState.NoChanges:
+        case 0:
             elem.classList.remove("full-sync", "normal-sync");
             break;
-        case SyncState.Normal:
+        case 1:
             elem.classList.add("normal-sync");
             elem.classList.remove("full-sync");
             break;
-        case SyncState.Full:
+        case 2:
             elem.classList.add("full-sync");
             elem.classList.remove("normal-sync");
             break;
     }
 }
 
-function isAbsolutelyPositioned(node: Node): boolean {
+function isAbsolutelyPositioned(node) {
     if (!(node instanceof HTMLElement)) {
         return false;
     }
     return getComputedStyle(node).position === "absolute";
 }
 
-function isLegacyAddonElement(node: Node): boolean {
+function isLegacyAddonElement(node) {
     if (isAbsolutelyPositioned(node)) {
         return true;
     }
@@ -51,7 +39,7 @@ function isLegacyAddonElement(node: Node): boolean {
     return false;
 }
 
-function getElementDimensions(element: HTMLElement): [number, number] {
+function getElementDimensions(element) {
     const widths = [element.offsetWidth];
     const heights = [element.offsetHeight];
     for (const child of element.childNodes) {
@@ -67,8 +55,8 @@ function getElementDimensions(element: HTMLElement): [number, number] {
 function moveLegacyAddonsToTray() {
     const rightTray = document.getElementsByClassName("right-tray")[0];
     if (!rightTray) return;
-    const toolbarChildren = document.querySelectorAll<HTMLElement>(".toolbar > *");
-    const legacyAddonElements: HTMLElement[] = Array.from(toolbarChildren)
+    const toolbarChildren = document.querySelectorAll(".toolbar > *");
+    const legacyAddonElements = Array.from(toolbarChildren)
         .reverse()
         .filter(isLegacyAddonElement);
 
@@ -86,8 +74,8 @@ margin-left: 5px; margin-right: 5px; position: relative;`;
 }
 
 function setupToolbarShortcuts() {
-    window.addEventListener("keydown", (e: KeyboardEvent) => {
-        const target = e.target as HTMLElement;
+    window.addEventListener("keydown", (e) => {
+        const target = e.target;
         if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
             return;
         }

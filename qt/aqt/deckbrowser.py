@@ -145,14 +145,16 @@ class DeckBrowser:
     ##########################################################################
 
     _body = """
-<center>
-<table cellspacing=0 cellpadding=3>
-%(tree)s
-</table>
-
-<br>
-%(stats)s
-</center>
+<div class="m3-deckbrowser-container">
+  <div class="m3-deck-card-wrapper">
+    <table class="m3-deck-table" cellspacing=0 cellpadding=0>
+      %(tree)s
+    </table>
+  </div>
+  <div class="m3-deck-stats">
+    %(stats)s
+  </div>
+</div>
 """
 
     def _renderPage(self, reuse: bool = False) -> None:
@@ -205,17 +207,22 @@ class DeckBrowser:
         self.web.eval("window.scrollTo(0, %d, 'instant');" % offset)
 
     def _renderStats(self) -> str:
-        return '<div id="studiedToday"><span>{}</span></div>'.format(
+        return '<div id="studiedToday" class="m3-studied-today"><span>{}</span></div>'.format(
             self._render_data.studied_today
         )
 
     def _renderDeckTree(self, top: DeckTreeNode) -> str:
         buf = """
-<tr><th colspan=5 align=start>{}</th>
-<th class=count>{}</th>
-<th class=count>{}</th>
-<th class=count>{}</th>
-<th class=optscol></th></tr>""".format(
+<thead>
+<tr class="m3-tree-head">
+  <th colspan=5 align=start class="m3-th-deck">{}</th>
+  <th class="count m3-th-new">{}</th>
+  <th class="count m3-th-learn">{}</th>
+  <th class="count m3-th-review">{}</th>
+  <th class="optscol m3-th-opts"></th>
+</tr>
+</thead>
+<tbody>""".format(
             tr.decks_deck(),
             tr.actions_new(),
             tr.decks_learn_header(),
@@ -228,6 +235,7 @@ class DeckBrowser:
         for child in top.children:
             buf += self._render_deck_node(child, ctx)
 
+        buf += "</tbody>"
         return buf
 
     def _render_deck_node(self, node: DeckTreeNode, ctx: RenderDeckNodeContext) -> str:
@@ -276,22 +284,23 @@ class DeckBrowser:
         )
 
         # due counts
-        def nonzeroColour(cnt: int, klass: str) -> str:
+        def countBadge(cnt: int, klass: str) -> str:
             if not cnt:
-                klass = "zero-count"
-            return f'<span class="{klass}">{cnt}</span>'
+                return f'<span class="m3-badge zero-count">0</span>'
+            return f'<span class="m3-badge m3-badge-{klass} {klass}">{cnt}</span>'
 
-        review = nonzeroColour(node.review_count, "review-count")
-        learn = nonzeroColour(node.learn_count, "learn-count")
+        review = countBadge(node.review_count, "review-count")
+        learn = countBadge(node.learn_count, "learn-count")
+        new_cnt = countBadge(node.new_count, "new-count")
 
-        buf += ("<td align=end>%s</td>" * 3) % (
-            nonzeroColour(node.new_count, "new-count"),
-            learn,
-            review,
+        buf += (
+            f"<td class='m3-count-col' align=end>{new_cnt}</td>"
+            f"<td class='m3-count-col' align=end>{learn}</td>"
+            f"<td class='m3-count-col' align=end>{review}</td>"
         )
         # options
         buf += (
-            "<td align=center class=opts><a onclick='return pycmd(\"opts:%d\");'>"
+            "<td align=center class=opts><a class='m3-gear-btn' title='选项' onclick='return pycmd(\"opts:%d\");'>"
             "<img src='/_anki/imgs/gears.svg' class=gears></a></td></tr>" % node.deck_id
         )
         # children
@@ -374,19 +383,24 @@ class DeckBrowser:
     ######################################################################
 
     drawLinks = [
-        ["", "shared", tr.decks_get_shared()],
-        ["", "create", tr.decks_create_deck()],
+        ["s", "shared", tr.decks_get_shared()],
+        ["c", "create", tr.decks_create_deck()],
         ["Ctrl+Shift+I", "import", tr.decks_import_file()],
     ]
 
     def _drawButtons(self) -> None:
-        buf = ""
+        buf = "<div class='m3-deck-actions-bar'>"
         drawLinks = deepcopy(self.drawLinks)
         for b in drawLinks:
-            if b[0]:
-                b[0] = tr.actions_shortcut_key(val=shortcut(b[0]))
-            buf += """
-<button title='%s' onclick='pycmd(\"%s\");'>%s</button>""" % tuple(b)
+            raw_key = shortcut(b[0]) if b[0] else ""
+            key_tip = tr.actions_shortcut_key(val=raw_key) if raw_key else ""
+            key_badge = f"<kbd class='m3-kbd'>{raw_key.replace('Ctrl+', '⌃').replace('Shift+', '⇧')}</kbd>" if raw_key else ""
+            buf += f"""
+<button class='m3-pill-btn m3-deck-action-btn m3-action-{b[1]}' title='{key_tip}' onclick='pycmd("{b[1]}");' tabindex='0'>
+  <span class='m3-btn-text'>{b[2]}</span>
+  {key_badge}
+</button>"""
+        buf += "</div>"
         self.bottom.draw(
             buf=buf,
             link_handler=self._linkHandler,

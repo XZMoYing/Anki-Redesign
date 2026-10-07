@@ -123,8 +123,11 @@ class Overview:
             openLink(url)
         return False
 
-    def _shortcutKeys(self) -> list[tuple[str, Callable]]:
+    def _shortcutKeys(self) -> list[tuple[str, Callable] | tuple[Qt.Key, Callable]]:
         return [
+            (" ", lambda: self._linkHandler("study")),
+            (Qt.Key.Key_Return, lambda: self._linkHandler("study")),
+            (Qt.Key.Key_Enter, lambda: self._linkHandler("study")),
             ("o", lambda: display_options_for_deck(self.mw.col.decks.current())),
             ("r", self.rebuild_current_filtered_deck),
             ("e", self.empty_current_filtered_deck),
@@ -240,38 +243,51 @@ class Overview:
             buried_new = buried_learning = buried_review = 0
         buried_label = tr.studying_counts_differ()
 
-        def number_row(title: str, klass: str, count: int, buried_count: int) -> str:
-            buried = f"{buried_count:+}" if buried_count else ""
+        def stat_col(title: str, klass: str, count: int, buried_count: int) -> str:
+            buried = f"<span class='bury-count' title='{buried_label}'>{buried_count:+}</span>" if buried_count else ""
             return f"""
-<tr>
-    <td>{title}:</td>
-    <td>
-        <b>
-            <span class={klass}>{count}</span>
-            <span class=bury-count title="{buried_label}">{buried}</span>
-        </b>
-    </td>
-</tr>
+<div class="m3-stat-item">
+  <div class="m3-stat-num"><span class="{klass}">{count}</span>{buried}</div>
+  <div class="m3-stat-label">{title}</div>
+</div>
+"""
+
+        space_label = tr.studying_space()
+        space_tip = tr.actions_shortcut_key(val=space_label)
+        study_btn = f"""
+<button id="study" class="m3-hero-study-btn" title="{space_tip}" onclick="pycmd('study');" autofocus tabindex="0">
+  <svg class="m3-play-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+  <span class="m3-study-label">{tr.studying_study_now()}</span>
+  <kbd class="m3-kbd m3-kbd-hero">{space_label}</kbd>
+</button>
 """
 
         return f"""
-<table width=400 cellpadding=5>
-<tr><td align=center valign=top>
-<table cellspacing=5>
-{number_row(tr.actions_new(), "new-count", counts[0], buried_new)}
-{number_row(tr.scheduling_learning(), "learn-count", counts[1], buried_learning)}
-{number_row(tr.studying_to_review(), "review-count", counts[2], buried_review)}
-</table>
-</td><td align=center>
-{but("study", tr.studying_study_now(), id="study", extra=" autofocus")}</td></tr></table>"""
+<div class="m3-overview-body">
+  <div class="m3-stats-card">
+    <div class="m3-stats-grid">
+      {stat_col(tr.actions_new(), "new-count", counts[0], buried_new)}
+      {stat_col(tr.scheduling_learning(), "learn-count", counts[1], buried_learning)}
+      {stat_col(tr.studying_to_review(), "review-count", counts[2], buried_review)}
+    </div>
+  </div>
+  <div class="m3-study-action">
+    {study_btn}
+  </div>
+</div>
+"""
 
     _body = """
-<center>
-<h3>%(deck)s</h3>
-%(shareLink)s
-%(desc)s
-%(table)s
-</center>
+<div class="m3-overview-container">
+  <div class="m3-overview-card">
+    <div class="m3-deck-header">
+      <h2 class="m3-deck-title">%(deck)s</h2>
+      %(shareLink)s
+    </div>
+    %(desc)s
+    %(table)s
+  </div>
+</div>
 """
 
     def edit_description(self) -> None:

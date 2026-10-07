@@ -105,6 +105,20 @@ class Preferences(QDialog):
             )
             line_edit.setPlaceholderText(tr.preferences_shortcut_placeholder())
 
+        # Material Design 3 Expressive Screen Shake & Milestone Encouragement Setting
+        shake_checkbox = QCheckBox("启用学习里程碑激励特效与屏幕抖动 (M3 Expressive FX)")
+        shake_checkbox.setChecked(self.mw.pm.meta.get("m3_screen_shake", True))
+
+        def on_shake_changed(state: int) -> None:
+            enabled = bool(state)
+            self.mw.pm.meta["m3_screen_shake"] = enabled
+            js = f"localStorage.setItem('m3_shake_disabled', '{str(not enabled).lower()}');"
+            self.mw.bottomWeb.eval(js)
+            self.mw.web.eval(js)
+
+        qconnect(shake_checkbox.stateChanged, on_shake_changed)
+        layout.addRow("", shake_checkbox)
+
     def accept(self) -> None:
         self.accept_with_callback()
 

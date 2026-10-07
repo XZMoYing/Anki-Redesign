@@ -322,32 +322,29 @@ class Toolbar:
         tip: str | None = None,
         id: str | None = None,
     ) -> str:
-        """Generates HTML link element and registers link handler
-
-        Arguments:
-            cmd {str} -- Command name used for the JS → Python bridge
-            label {str} -- Display label of the link
-            func {Callable} -- Callable to be called on clicking the link
-
-        Keyword Arguments:
-            tip {Optional[str]} -- Optional tooltip text to show on hovering
-                                   over the link (default: {None})
-            id: {Optional[str]} -- Optional id attribute to supply the link with
-                                   (default: {None})
-
-        Returns:
-            str -- HTML link element
-        """
-
         self.link_handlers[cmd] = func
 
         title_attr = f'title="{tip}"' if tip else ""
         id_attr = f'id="{id}"' if id else ""
 
+        shortcut_char = ""
+        if cmd == "decks":
+            shortcut_char = "D"
+        elif cmd == "add":
+            shortcut_char = "A"
+        elif cmd == "browse":
+            shortcut_char = "B"
+        elif cmd == "stats":
+            shortcut_char = "T"
+        elif tip and "(" in tip:
+            shortcut_char = tip.split("(")[-1].replace(")", "").strip()
+
+        kbd_badge = f"<kbd class='m3-kbd'>{shortcut_char}</kbd>" if shortcut_char else ""
+
         return (
-            f"""<a class=hitem tabindex="-1" aria-label="{label}" """
+            f"""<a class="hitem m3-nav-item" tabindex="0" aria-label="{label}" """
             f"""{title_attr} {id_attr} href=# onclick="return pycmd('{cmd}')">"""
-            f"""{label}</a>"""
+            f"""<span class="m3-nav-label">{label}</span>{kbd_badge}</a>"""
         )
 
     def _centerLinks(self) -> str:
@@ -414,8 +411,10 @@ class Toolbar:
         self.link_handlers[label] = self._syncLinkHandler
 
         return f"""
-<a class=hitem tabindex="-1" aria-label="{name}" title="{title}" id="{label}" href=# onclick="return pycmd('{label}')"
->{name}<img id=sync-spinner src='/_anki/imgs/refresh.svg'>
+<a class="hitem m3-nav-item m3-nav-sync" tabindex="0" aria-label="{name}" title="{title}" id="{label}" href=# onclick="return pycmd('{label}')">
+  <span class="m3-nav-label">{name}</span>
+  <kbd class="m3-kbd">Y</kbd>
+  <img id=sync-spinner src='/_anki/imgs/refresh.svg' class="m3-sync-icon">
 </a>"""
 
     def set_sync_active(self, active: bool) -> None:
