@@ -58,6 +58,11 @@ def show_exception(*, parent: QWidget, exception: Exception) -> None:
             None, exception, exception.__traceback__
         )
     error_text = "\n".join(error_lines)
+    try:
+        with open("/tmp/anki_error.log", "w") as f:
+            f.write(error_text)
+    except Exception:
+        pass
     print(error_lines)
     _mbox = _init_message_box(
         str(exception), error_text, help_page, text_format, parent

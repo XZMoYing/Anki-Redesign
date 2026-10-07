@@ -1,12 +1,149 @@
 /* Copyright: Ankitects Pty Ltd and contributors
- * License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html */
+ * Material Design 3 Expressive Bottom Toolbar Styling
+ * Compliant with Google M3 Expressive Design Specifications
+ */
+
+@import "./m3-expressive.scss";
+
+* {
+  box-sizing: border-box;
+}
 
 body {
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--m3-font-family);
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 64px;
 }
 
 #header {
-    border-bottom: 0;
-    margin-top: 0;
-    padding: 9px;
+  border-bottom: 0;
+  margin-top: 0;
+  padding: 6px;
+  background: transparent;
+}
+
+/* Floating Action Dock */
+.m3-deck-actions-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--m3-shape-pill);
+  padding: 6px 14px;
+  border: 1px solid var(--m3-sys-color-outline-variant);
+  box-shadow: var(--m3-elevation-dock);
+  margin: 4px auto;
+  transition: transform var(--m3-duration-short) ease, box-shadow var(--m3-duration-short) ease;
+}
+
+body.nightMode .m3-deck-actions-bar,
+body.night-mode .m3-deck-actions-bar {
+  background: rgba(24, 28, 36, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.m3-deck-action-btn,
+button {
+  height: 42px;
+  border-radius: var(--m3-shape-pill);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  outline: none;
+  transition: transform var(--m3-duration-short) var(--m3-easing-spring),
+              box-shadow var(--m3-duration-short) ease,
+              background-color var(--m3-duration-short) ease;
+}
+
+.m3-deck-action-btn:active,
+button:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+.m3-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.m3-action-svg {
+  display: block;
+  fill: currentColor;
+}
+
+/* Primary Button: Create Deck (创建牌组) */
+.m3-action-create {
+  background: var(--m3-sys-color-primary);
+  color: var(--m3-sys-color-on-primary);
+  padding: 0 22px;
+  box-shadow: 0 4px 14px rgba(11, 87, 208, 0.35);
+}
+
+.m3-action-create:hover {
+  transform: translateY(-2px) scale(1.025);
+  box-shadow: 0 8px 22px rgba(11, 87, 208, 0.45);
+}
+
+.m3-action-create .m3-kbd {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Secondary Tonal Button: Import (导入文件) */
+.m3-action-import {
+  background: var(--m3-sys-color-surface-container-high);
+  color: var(--m3-sys-color-on-surface);
+  padding: 0 18px;
+}
+
+.m3-action-import:hover {
+  background: var(--m3-sys-color-surface-container-highest);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.m3-action-import .m3-kbd {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--m3-sys-color-on-surface-variant);
+}
+
+/* Tertiary Outlined Button: Shared (获取共享牌组) */
+.m3-action-shared {
+  background: transparent;
+  color: var(--m3-sys-color-on-surface);
+  border: 1.5px solid var(--m3-sys-color-outline);
+  padding: 0 18px;
+}
+
+.m3-action-shared:hover {
+  background: var(--m3-sys-color-surface-container);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.m3-action-shared .m3-kbd {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--m3-sys-color-on-surface-variant);
+}
+
+.m3-kbd {
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 5px;
+  padding: 2px 6px;
+  letter-spacing: 0.3px;
 }

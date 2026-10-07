@@ -1,5 +1,6 @@
+@charset "UTF-8";
 /* Copyright: Ankitects Pty Ltd and contributors
- * Material Design 3 Expressive Deck Overview Screen Styling
+ * Material Design 3 Expressive Bottom Toolbar Styling
  * Compliant with Google M3 Expressive Design Specifications
  */
 /* Material Design 3 Expressive Design System Tokens for Anki
@@ -218,185 +219,136 @@ body.nightMode, body.night-mode, .nightMode, .night-mode, [data-theme=dark], [da
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
   font-family: var(--m3-font-family);
-  background: var(--m3-sys-color-surface);
-  color: var(--m3-sys-color-on-surface);
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.m3-overview-container {
-  max-width: 640px;
-  margin: 36px auto;
-  padding: 0 16px;
+  background: transparent;
   display: flex;
   justify-content: center;
-}
-
-/* Material Design 3 Expressive Hero Card */
-.m3-overview-card {
-  width: 100%;
-  background: var(--m3-sys-color-surface-container);
-  border-radius: var(--m3-shape-card-large, 28px);
-  border: 1px solid var(--m3-sys-color-outline-variant);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-  padding: 36px 32px;
-  text-align: center;
-  transition: background var(--m3-duration-medium) ease, box-shadow var(--m3-duration-medium) ease;
-}
-
-.m3-deck-header {
-  margin-bottom: 14px;
-}
-
-.m3-deck-title {
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--m3-sys-color-on-surface);
-  margin: 0 0 6px 0;
-  letter-spacing: -0.2px;
-}
-
-.smallLink {
-  font-size: 12px;
-  color: var(--m3-sys-color-primary);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.smallLink:hover {
-  text-decoration: underline;
-}
-
-.description {
-  color: var(--m3-sys-color-on-surface-variant);
-  font-size: 14px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  margin: 12px auto 16px auto;
-  max-width: 85%;
-}
-
-/* Statistics Grid */
-.m3-stats-card {
-  background: var(--m3-sys-color-surface-container-high);
-  border-radius: 22px;
-  padding: 20px 14px;
-  margin: 24px 0 28px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}
-
-.m3-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
   align-items: center;
+  min-height: 64px;
 }
 
-.m3-stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+#header {
+  border-bottom: 0;
+  margin-top: 0;
+  padding: 6px;
+  background: transparent;
 }
 
-.m3-stat-num {
-  font-size: 32px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.1;
-  letter-spacing: -0.5px;
-}
-
-.m3-stat-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--m3-sys-color-on-surface-variant);
-}
-
-.new-count {
-  color: #005fb0;
-}
-
-.learn-count {
-  color: #b35c00;
-}
-
-.review-count {
-  color: #007a3d;
-}
-
-body.nightMode .new-count, body.night-mode .new-count {
-  color: #a1c9ff;
-}
-
-body.nightMode .learn-count, body.night-mode .learn-count {
-  color: #ffb870;
-}
-
-body.nightMode .review-count, body.night-mode .review-count {
-  color: #6cda8f;
-}
-
-.bury-count {
-  font-size: 13px;
-  color: var(--m3-sys-color-outline);
-  margin-left: 3px;
-}
-
-/* Hero "Study Now" Action */
-.m3-study-action {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.m3-hero-study-btn {
-  height: 56px;
-  width: 100%;
-  max-width: 380px;
-  border-radius: var(--m3-shape-pill);
-  background: var(--m3-sys-color-primary);
-  color: var(--m3-sys-color-on-primary);
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  border: none;
-  cursor: pointer;
+/* Floating Action Dock */
+.m3-deck-actions-bar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  box-shadow: 0 4px 16px rgba(0, 95, 176, 0.28);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--m3-shape-pill);
+  padding: 6px 14px;
+  border: 1px solid var(--m3-sys-color-outline-variant);
+  box-shadow: var(--m3-elevation-dock);
+  margin: 4px auto;
+  transition: transform var(--m3-duration-short) ease, box-shadow var(--m3-duration-short) ease;
+}
+
+body.nightMode .m3-deck-actions-bar,
+body.night-mode .m3-deck-actions-bar {
+  background: rgba(24, 28, 36, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.m3-deck-action-btn,
+button {
+  height: 42px;
+  border-radius: var(--m3-shape-pill);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
   outline: none;
   transition: transform var(--m3-duration-short) var(--m3-easing-spring), box-shadow var(--m3-duration-short) ease, background-color var(--m3-duration-short) ease;
 }
 
-.m3-hero-study-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 95, 176, 0.38);
-}
-
-.m3-hero-study-btn:active {
+.m3-deck-action-btn:active,
+button:active {
   transform: translateY(1px) scale(0.97);
 }
 
-.m3-hero-study-btn:focus-visible {
-  outline: 3px solid var(--m3-sys-color-primary);
-  outline-offset: 3px;
+.m3-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
-.m3-kbd-hero {
+.m3-action-svg {
+  display: block;
+  fill: currentColor;
+}
+
+/* Primary Button: Create Deck (创建牌组) */
+.m3-action-create {
+  background: var(--m3-sys-color-primary);
+  color: var(--m3-sys-color-on-primary);
+  padding: 0 22px;
+  box-shadow: 0 4px 14px rgba(11, 87, 208, 0.35);
+}
+
+.m3-action-create:hover {
+  transform: translateY(-2px) scale(1.025);
+  box-shadow: 0 8px 22px rgba(11, 87, 208, 0.45);
+}
+
+.m3-action-create .m3-kbd {
   background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
   color: #ffffff;
-  padding: 2px 8px;
-  height: 22px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 700;
 }
 
-.m3-play-icon {
-  margin-right: -2px;
+/* Secondary Tonal Button: Import (导入文件) */
+.m3-action-import {
+  background: var(--m3-sys-color-surface-container-high);
+  color: var(--m3-sys-color-on-surface);
+  padding: 0 18px;
+}
+
+.m3-action-import:hover {
+  background: var(--m3-sys-color-surface-container-highest);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.m3-action-import .m3-kbd {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--m3-sys-color-on-surface-variant);
+}
+
+/* Tertiary Outlined Button: Shared (获取共享牌组) */
+.m3-action-shared {
+  background: transparent;
+  color: var(--m3-sys-color-on-surface);
+  border: 1.5px solid var(--m3-sys-color-outline);
+  padding: 0 18px;
+}
+
+.m3-action-shared:hover {
+  background: var(--m3-sys-color-surface-container);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.m3-action-shared .m3-kbd {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--m3-sys-color-on-surface-variant);
+}
+
+.m3-kbd {
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 5px;
+  padding: 2px 6px;
+  letter-spacing: 0.3px;
 }

@@ -123,11 +123,12 @@ class Overview:
             openLink(url)
         return False
 
-    def _shortcutKeys(self) -> list[tuple[str, Callable] | tuple[Qt.Key, Callable]]:
+    def _shortcutKeys(self) -> list[tuple[str, Callable]]:
         return [
             (" ", lambda: self._linkHandler("study")),
-            (Qt.Key.Key_Return, lambda: self._linkHandler("study")),
-            (Qt.Key.Key_Enter, lambda: self._linkHandler("study")),
+            ("Return", lambda: self._linkHandler("study")),
+            ("Enter", lambda: self._linkHandler("study")),
+            ("s", lambda: self._linkHandler("study")),
             ("o", lambda: display_options_for_deck(self.mw.col.decks.current())),
             ("r", self.rebuild_current_filtered_deck),
             ("e", self.empty_current_filtered_deck),
@@ -317,12 +318,17 @@ class Overview:
         )
         if not callable(link_handler):
             link_handler = self._linkHandler
-        buf = ""
+        buf = "<div class='m3-deck-actions-bar'>"
         for b in links:
-            if b[0]:
-                b[0] = tr.actions_shortcut_key(val=shortcut(b[0]))
-            buf += """
-<button title="%s" onclick='pycmd("%s")'>%s</button>""" % tuple(b)
+            raw_key = b[0]
+            key_tip = tr.actions_shortcut_key(val=shortcut(raw_key)) if raw_key else ""
+            key_badge = f"<kbd class='m3-kbd'>{shortcut(raw_key)}</kbd>" if raw_key else ""
+            buf += f"""
+<button class='m3-pill-btn m3-deck-action-btn' title='{key_tip}' onclick='pycmd("{b[1]}");' tabindex='0'>
+  <span class='m3-btn-text'>{b[2]}</span>
+  {key_badge}
+</button>"""
+        buf += "</div>"
         self.bottom.draw(
             buf=buf,
             link_handler=link_handler,

@@ -1,46 +1,214 @@
 /* Copyright: Ankitects Pty Ltd and contributors
- * Material Design 3 Expressive Top Navigation Bar Styling (CSS)
+ * Material Design 3 Expressive Top Navigation Bar Styling
  * Compliant with Google M3 Expressive Design Specifications
  */
-
+/* Material Design 3 Expressive Design System Tokens for Anki
+ * Compliant with Google M3 Expressive Design Specifications
+ */
 :root {
-  --m3-sys-color-primary: #005fb0;
-  --m3-sys-color-surface: #faf8ff;
-  --m3-sys-color-surface-container: #eeeaf4;
-  --m3-sys-color-surface-container-high: #e8e4ee;
+  /* M3 Expressive - Light Palette */
+  --m3-sys-color-primary: #0b57d0;
+  --m3-sys-color-on-primary: #ffffff;
+  --m3-sys-color-primary-container: #d3e3fd;
+  --m3-sys-color-on-primary-container: #041e49;
+  --m3-sys-color-secondary: #00639b;
+  --m3-sys-color-on-secondary: #ffffff;
+  --m3-sys-color-secondary-container: #c2e7ff;
+  --m3-sys-color-on-secondary-container: #001d35;
+  --m3-sys-color-tertiary: #6e5676;
+  --m3-sys-color-on-tertiary: #ffffff;
+  --m3-sys-color-tertiary-container: #f7d8ff;
+  --m3-sys-color-on-tertiary-container: #271430;
+  --m3-sys-color-error: #ba1a1a;
+  --m3-sys-color-on-error: #ffffff;
+  --m3-sys-color-error-container: #ffdad6;
+  --m3-sys-color-on-error-container: #410002;
+  /* Layered Expressive Surfaces (Noticeable Tint Contrast) */
+  --m3-sys-color-surface: #eef2f8;
+  --m3-sys-color-surface-dim: #dfe3ea;
+  --m3-sys-color-surface-bright: #ffffff;
   --m3-sys-color-surface-container-lowest: #ffffff;
-  --m3-sys-color-on-surface: #1a1b21;
+  --m3-sys-color-surface-container-low: #ffffff;
+  --m3-sys-color-surface-container: #e8ecf4;
+  --m3-sys-color-surface-container-high: #e0e5ed;
+  --m3-sys-color-surface-container-highest: #d8dee8;
+  --m3-sys-color-on-surface: #1b1c20;
   --m3-sys-color-on-surface-variant: #44474f;
-  --m3-sys-color-outline-variant: #c4c6d0;
-
-  --m3-font-family: -apple-system, BlinkMacSystemFont, "Google Sans", "Google Sans Text", Roboto, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --m3-sys-color-outline: rgba(0, 0, 0, 0.12);
+  --m3-sys-color-outline-variant: rgba(0, 0, 0, 0.06);
+  /* Expressive Study Mastery Tokens (Light) */
+  --m3-ease-1-bg: #ffdad6;
+  --m3-ease-1-fg: #410002;
+  --m3-ease-1-border: #ffb4ab;
+  --m3-ease-1-due-color: #ba1a1a;
+  --m3-ease-1-due-bg: rgba(186, 26, 26, 0.12);
+  --m3-ease-1-kbd: #ffffff;
+  --m3-ease-1-kbd-bg: #410002;
+  --m3-ease-2-bg: #ffe0bf;
+  --m3-ease-2-fg: #2d1600;
+  --m3-ease-2-border: #ffb77a;
+  --m3-ease-2-due-color: #904d00;
+  --m3-ease-2-due-bg: rgba(144, 77, 0, 0.12);
+  --m3-ease-2-kbd: #ffffff;
+  --m3-ease-2-kbd-bg: #2d1600;
+  --m3-ease-3-bg: #d5e4ff;
+  --m3-ease-3-fg: #001d36;
+  --m3-ease-3-border: #a1c9ff;
+  --m3-ease-3-due-color: #005fb0;
+  --m3-ease-3-due-bg: rgba(0, 95, 176, 0.12);
+  --m3-ease-3-kbd: #ffffff;
+  --m3-ease-3-kbd-bg: #001d36;
+  --m3-ease-4-bg: #b6f2bd;
+  --m3-ease-4-fg: #00210e;
+  --m3-ease-4-border: #7ad788;
+  --m3-ease-4-due-color: #146c2e;
+  --m3-ease-4-due-bg: rgba(20, 108, 46, 0.12);
+  --m3-ease-4-kbd: #ffffff;
+  --m3-ease-4-kbd-bg: #00210e;
+  /* Expressive Typography Scale */
+  --m3-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Google Sans", "Google Sans Text", "SF Pro Display", Roboto, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  /* Expressive Motion & Spring Physics */
   --m3-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --m3-easing-spring-snappy: cubic-bezier(0.2, 0, 0, 1);
+  --m3-easing-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
   --m3-duration-short: 160ms;
+  --m3-duration-medium: 260ms;
+  --m3-duration-long: 420ms;
+  /* Expressive Shapes */
   --m3-shape-pill: 9999px;
+  --m3-shape-card: 20px;
+  --m3-shape-card-large: 28px;
+  --m3-shape-small: 12px;
+  /* Expressive Layered Shadows */
+  --m3-elevation-card: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --m3-elevation-card-hover: 0 18px 40px -6px rgba(15, 23, 42, 0.12), 0 6px 16px rgba(15, 23, 42, 0.06);
+  --m3-elevation-dock: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* Dark Mode Tokens */
 @media (prefers-color-scheme: dark) {
   :root {
     --m3-sys-color-primary: #a1c9ff;
-    --m3-sys-color-surface: #121318;
-    --m3-sys-color-surface-container: #1e1f25;
-    --m3-sys-color-surface-container-high: #292a30;
-    --m3-sys-color-surface-container-lowest: #0d0e13;
-    --m3-sys-color-on-surface: #e2dfe8;
+    --m3-sys-color-on-primary: #00315f;
+    --m3-sys-color-primary-container: #004786;
+    --m3-sys-color-on-primary-container: #d5e4ff;
+    --m3-sys-color-secondary: #bcc7db;
+    --m3-sys-color-on-secondary: #263141;
+    --m3-sys-color-secondary-container: #3d4758;
+    --m3-sys-color-on-secondary-container: #d8e3f8;
+    --m3-sys-color-tertiary: #dabde2;
+    --m3-sys-color-on-tertiary: #3d2846;
+    --m3-sys-color-tertiary-container: #553e5d;
+    --m3-sys-color-on-tertiary-container: #f7d8ff;
+    --m3-sys-color-error: #ffb4ab;
+    --m3-sys-color-on-error: #690005;
+    --m3-sys-color-error-container: #93000a;
+    --m3-sys-color-on-error-container: #ffdad6;
+    --m3-sys-color-surface: #0e1116;
+    --m3-sys-color-surface-dim: #080a0d;
+    --m3-sys-color-surface-bright: #2d3340;
+    --m3-sys-color-surface-container-lowest: #14171f;
+    --m3-sys-color-surface-container-low: #181c24;
+    --m3-sys-color-surface-container: #1e232d;
+    --m3-sys-color-surface-container-high: #252b37;
+    --m3-sys-color-surface-container-highest: #2d3442;
+    --m3-sys-color-on-surface: #e2e5ec;
     --m3-sys-color-on-surface-variant: #c4c6d0;
-    --m3-sys-color-outline-variant: #44474f;
+    --m3-sys-color-outline: rgba(255, 255, 255, 0.15);
+    --m3-sys-color-outline-variant: rgba(255, 255, 255, 0.08);
+    --m3-ease-1-bg: #410002;
+    --m3-ease-1-fg: #ffdad6;
+    --m3-ease-1-border: #93000a;
+    --m3-ease-1-due-color: #ffb4ab;
+    --m3-ease-1-due-bg: rgba(255, 180, 171, 0.15);
+    --m3-ease-1-kbd: #410002;
+    --m3-ease-1-kbd-bg: #ffdad6;
+    --m3-ease-2-bg: #301400;
+    --m3-ease-2-fg: #ffe0bf;
+    --m3-ease-2-border: #6d3300;
+    --m3-ease-2-due-color: #ffb77a;
+    --m3-ease-2-due-bg: rgba(255, 183, 122, 0.15);
+    --m3-ease-2-kbd: #301400;
+    --m3-ease-2-kbd-bg: #ffe0bf;
+    --m3-ease-3-bg: #002244;
+    --m3-ease-3-fg: #d5e4ff;
+    --m3-ease-3-border: #004488;
+    --m3-ease-3-due-color: #a1c9ff;
+    --m3-ease-3-due-bg: rgba(161, 201, 255, 0.15);
+    --m3-ease-3-kbd: #002244;
+    --m3-ease-3-kbd-bg: #d5e4ff;
+    --m3-ease-4-bg: #002d15;
+    --m3-ease-4-fg: #b6f2bd;
+    --m3-ease-4-border: #005a2c;
+    --m3-ease-4-due-color: #7ad788;
+    --m3-ease-4-due-bg: rgba(122, 215, 136, 0.15);
+    --m3-ease-4-kbd: #002d15;
+    --m3-ease-4-kbd-bg: #b6f2bd;
+    --m3-elevation-card: 0 12px 36px -6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --m3-elevation-card-hover: 0 18px 44px -6px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.4);
+    --m3-elevation-dock: 0 10px 30px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 }
-
-body.nightMode, body.night-mode, .nightMode, .night-mode, [data-theme="dark"] {
+body.nightMode, body.night-mode, .nightMode, .night-mode, [data-theme=dark], [data-bs-theme=dark] {
   --m3-sys-color-primary: #a1c9ff;
-  --m3-sys-color-surface: #121318;
-  --m3-sys-color-surface-container: #1e1f25;
-  --m3-sys-color-surface-container-high: #292a30;
-  --m3-sys-color-surface-container-lowest: #0d0e13;
-  --m3-sys-color-on-surface: #e2dfe8;
+  --m3-sys-color-on-primary: #00315f;
+  --m3-sys-color-primary-container: #004786;
+  --m3-sys-color-on-primary-container: #d5e4ff;
+  --m3-sys-color-secondary: #bcc7db;
+  --m3-sys-color-on-secondary: #263141;
+  --m3-sys-color-secondary-container: #3d4758;
+  --m3-sys-color-on-secondary-container: #d8e3f8;
+  --m3-sys-color-tertiary: #dabde2;
+  --m3-sys-color-on-tertiary: #3d2846;
+  --m3-sys-color-tertiary-container: #553e5d;
+  --m3-sys-color-on-tertiary-container: #f7d8ff;
+  --m3-sys-color-error: #ffb4ab;
+  --m3-sys-color-on-error: #690005;
+  --m3-sys-color-error-container: #93000a;
+  --m3-sys-color-on-error-container: #ffdad6;
+  --m3-sys-color-surface: #0e1116;
+  --m3-sys-color-surface-dim: #080a0d;
+  --m3-sys-color-surface-bright: #2d3340;
+  --m3-sys-color-surface-container-lowest: #14171f;
+  --m3-sys-color-surface-container-low: #181c24;
+  --m3-sys-color-surface-container: #1e232d;
+  --m3-sys-color-surface-container-high: #252b37;
+  --m3-sys-color-surface-container-highest: #2d3442;
+  --m3-sys-color-on-surface: #e2e5ec;
   --m3-sys-color-on-surface-variant: #c4c6d0;
-  --m3-sys-color-outline-variant: #44474f;
+  --m3-sys-color-outline: rgba(255, 255, 255, 0.15);
+  --m3-sys-color-outline-variant: rgba(255, 255, 255, 0.08);
+  --m3-ease-1-bg: #410002;
+  --m3-ease-1-fg: #ffdad6;
+  --m3-ease-1-border: #93000a;
+  --m3-ease-1-due-color: #ffb4ab;
+  --m3-ease-1-due-bg: rgba(255, 180, 171, 0.15);
+  --m3-ease-1-kbd: #410002;
+  --m3-ease-1-kbd-bg: #ffdad6;
+  --m3-ease-2-bg: #301400;
+  --m3-ease-2-fg: #ffe0bf;
+  --m3-ease-2-border: #6d3300;
+  --m3-ease-2-due-color: #ffb77a;
+  --m3-ease-2-due-bg: rgba(255, 183, 122, 0.15);
+  --m3-ease-2-kbd: #301400;
+  --m3-ease-2-kbd-bg: #ffe0bf;
+  --m3-ease-3-bg: #002244;
+  --m3-ease-3-fg: #d5e4ff;
+  --m3-ease-3-border: #004488;
+  --m3-ease-3-due-color: #a1c9ff;
+  --m3-ease-3-due-bg: rgba(161, 201, 255, 0.15);
+  --m3-ease-3-kbd: #002244;
+  --m3-ease-3-kbd-bg: #d5e4ff;
+  --m3-ease-4-bg: #002d15;
+  --m3-ease-4-fg: #b6f2bd;
+  --m3-ease-4-border: #005a2c;
+  --m3-ease-4-due-color: #7ad788;
+  --m3-ease-4-due-bg: rgba(122, 215, 136, 0.15);
+  --m3-ease-4-kbd: #002d15;
+  --m3-ease-4-kbd-bg: #b6f2bd;
+  --m3-elevation-card: 0 12px 36px -6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --m3-elevation-card-hover: 0 18px 44px -6px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.4);
+  --m3-elevation-dock: 0 10px 30px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -51,111 +219,140 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--m3-font-family);
-  background: var(--m3-sys-color-surface-container);
+  background: var(--m3-sys-color-surface);
   color: var(--m3-sys-color-on-surface);
   user-select: none;
   -webkit-user-select: none;
   overflow: hidden;
-  height: 52px;
+  height: 54px;
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 6px 16px;
-  height: 52px;
-  background: var(--m3-sys-color-surface-container);
-  border-bottom: 1px solid var(--m3-sys-color-outline-variant);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  height: 54px;
+  background: transparent;
+  position: relative;
 }
 
 .left-tray,
 .right-tray {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: 60px;
 }
 
+.left-tray {
+  left: 16px;
+}
+
+.right-tray {
+  right: 16px;
+}
+
+/* Floating Segmented Pill Nav Group */
 .toolbar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--m3-shape-pill);
+  padding: 4px 6px;
+  border: 1px solid var(--m3-sys-color-outline-variant);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+body.nightMode .toolbar,
+body.night-mode .toolbar {
+  background: rgba(24, 28, 36, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 /* Expressive Navigation Segments */
-.m3-nav-item {
+.m3-nav-item,
+.hitem {
   height: 38px;
   border-radius: var(--m3-shape-pill);
-  padding: 0 14px;
+  padding: 0 16px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: var(--m3-sys-color-on-surface);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
   outline: none;
-  border: 1px solid transparent;
-  transition: transform var(--m3-duration-short) var(--m3-easing-spring),
-              background var(--m3-duration-short) ease,
-              box-shadow var(--m3-duration-short) ease,
-              color var(--m3-duration-short) ease;
+  border: none;
+  background: transparent;
+  transition: transform var(--m3-duration-short) var(--m3-easing-spring), background var(--m3-duration-short) ease, color var(--m3-duration-short) ease;
 }
 
-.m3-nav-item:hover {
-  background: var(--m3-sys-color-surface-container-high);
-  color: var(--m3-sys-color-primary);
+.m3-nav-item:hover,
+.hitem:hover {
+  background: var(--m3-sys-color-primary-container);
+  color: var(--m3-sys-color-on-primary-container);
   transform: translateY(-1px) scale(1.02);
 }
 
-.m3-nav-item:active {
+.m3-nav-item:active,
+.hitem:active {
   transform: translateY(1px) scale(0.97);
 }
 
-.m3-nav-item:focus-visible {
+.m3-nav-item:focus-visible,
+.hitem:focus-visible {
   outline: 3px solid var(--m3-sys-color-primary);
   outline-offset: 2px;
 }
 
 /* Keycap Shortcut Indicator */
-.m3-nav-item .m3-kbd {
-  font-size: 10px;
-  font-weight: 700;
-  border-radius: 5px;
-  padding: 1px 5px;
-  background: var(--m3-sys-color-surface-container-lowest);
-  border: 1px solid var(--m3-sys-color-outline-variant);
-  color: var(--m3-sys-color-on-surface-variant);
+.m3-nav-item .m3-kbd,
+.m3-kbd {
+  font-size: 10.5px;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+}
+
+body.nightMode .m3-kbd,
+body.night-mode .m3-kbd {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /* Sync Button Icon & Rotation */
-.m3-sync-icon {
-  width: 14px;
-  height: 14px;
+.m3-sync-icon,
+#sync-spinner {
+  width: 15px;
+  height: 15px;
   vertical-align: middle;
-  opacity: 0.8;
+  opacity: 0.85;
   transition: transform 0.3s ease;
 }
 
-.syncing #sync-spinner {
+.spin,
+#sync-spinner.spin {
   animation: m3-spin 1s linear infinite;
 }
 
 @keyframes m3-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@media (max-width: 600px) {
-  .m3-nav-item {
-    padding: 0 10px;
-    font-size: 12px;
+  from {
+    transform: rotate(0deg);
   }
-  .m3-nav-item .m3-kbd {
-    display: none;
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -147,6 +147,13 @@ class DeckBrowser:
     _body = """
 <div class="m3-deckbrowser-container">
   <div class="m3-deck-card-wrapper">
+    <div class="m3-deck-card-header">
+      <div class="m3-deck-header-title">
+        <span class="m3-deck-header-icon"><svg class="m3-svg-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg></span>
+        <span class="m3-deck-header-text">我的牌组</span>
+      </div>
+      <div class="m3-deck-header-badge">M3 Expressive</div>
+    </div>
     <table class="m3-deck-table" cellspacing=0 cellpadding=0>
       %(tree)s
     </table>
@@ -272,14 +279,24 @@ class DeckBrowser:
             extraclass = "filtered"
         else:
             extraclass = ""
+        deck_icon = (
+            '<svg class="m3-deck-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">'
+            '<path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>'
+            '</svg>'
+        ) if node.children else (
+            '<svg class="m3-deck-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">'
+            '<path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>'
+            '</svg>'
+        )
         buf += """
 
         <td class=decktd colspan=5>%s%s<a class="deck %s"
-        href=# onclick="return pycmd('open:%d')">%s</a></td>""" % (
+        href=# onclick="return pycmd('open:%d')"><span class="m3-deck-icon">%s</span><span class="m3-deck-name">%s</span></a></td>""" % (
             indent(),
             collapse,
             extraclass,
             node.deck_id,
+            deck_icon,
             html.escape(node.name),
         )
 
@@ -383,20 +400,44 @@ class DeckBrowser:
     ######################################################################
 
     drawLinks = [
-        ["s", "shared", tr.decks_get_shared()],
         ["c", "create", tr.decks_create_deck()],
-        ["Ctrl+Shift+I", "import", tr.decks_import_file()],
+        ["i", "import", tr.decks_import_file()],
+        ["s", "shared", tr.decks_get_shared()],
     ]
 
     def _drawButtons(self) -> None:
         buf = "<div class='m3-deck-actions-bar'>"
         drawLinks = deepcopy(self.drawLinks)
         for b in drawLinks:
-            raw_key = shortcut(b[0]) if b[0] else ""
+            raw_key = b[0].upper()
             key_tip = tr.actions_shortcut_key(val=raw_key) if raw_key else ""
-            key_badge = f"<kbd class='m3-kbd'>{raw_key.replace('Ctrl+', '⌃').replace('Shift+', '⇧')}</kbd>" if raw_key else ""
+            key_badge = f"<kbd class='m3-kbd'>{raw_key}</kbd>" if raw_key else ""
+            icon = ""
+            if b[1] == "create":
+                icon = (
+                    '<span class="m3-action-icon">'
+                    '<svg class="m3-action-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">'
+                    '<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>'
+                    '</svg></span>'
+                )
+            elif b[1] == "import":
+                icon = (
+                    '<span class="m3-action-icon">'
+                    '<svg class="m3-action-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">'
+                    '<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>'
+                    '</svg></span>'
+                )
+            elif b[1] == "shared":
+                icon = (
+                    '<span class="m3-action-icon">'
+                    '<svg class="m3-action-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">'
+                    '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>'
+                    '</svg></span>'
+                )
+
             buf += f"""
 <button class='m3-pill-btn m3-deck-action-btn m3-action-{b[1]}' title='{key_tip}' onclick='pycmd("{b[1]}");' tabindex='0'>
+  {icon}
   <span class='m3-btn-text'>{b[2]}</span>
   {key_badge}
 </button>"""

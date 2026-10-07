@@ -1,72 +1,214 @@
 /* Copyright: Ankitects Pty Ltd and contributors
- * Material Design 3 Expressive Deck Browser Styling (CSS)
+ * Material Design 3 Expressive Deck Browser Styling
  * Compliant with Google M3 Expressive Design Specifications
  */
-
+/* Material Design 3 Expressive Design System Tokens for Anki
+ * Compliant with Google M3 Expressive Design Specifications
+ */
 :root {
-  --m3-sys-color-primary: #005fb0;
+  /* M3 Expressive - Light Palette */
+  --m3-sys-color-primary: #0b57d0;
   --m3-sys-color-on-primary: #ffffff;
-  --m3-sys-color-primary-container: #d5e4ff;
-  --m3-sys-color-on-primary-container: #001d36;
-
-  --m3-sys-color-surface: #faf8ff;
+  --m3-sys-color-primary-container: #d3e3fd;
+  --m3-sys-color-on-primary-container: #041e49;
+  --m3-sys-color-secondary: #00639b;
+  --m3-sys-color-on-secondary: #ffffff;
+  --m3-sys-color-secondary-container: #c2e7ff;
+  --m3-sys-color-on-secondary-container: #001d35;
+  --m3-sys-color-tertiary: #6e5676;
+  --m3-sys-color-on-tertiary: #ffffff;
+  --m3-sys-color-tertiary-container: #f7d8ff;
+  --m3-sys-color-on-tertiary-container: #271430;
+  --m3-sys-color-error: #ba1a1a;
+  --m3-sys-color-on-error: #ffffff;
+  --m3-sys-color-error-container: #ffdad6;
+  --m3-sys-color-on-error-container: #410002;
+  /* Layered Expressive Surfaces (Noticeable Tint Contrast) */
+  --m3-sys-color-surface: #eef2f8;
+  --m3-sys-color-surface-dim: #dfe3ea;
+  --m3-sys-color-surface-bright: #ffffff;
   --m3-sys-color-surface-container-lowest: #ffffff;
-  --m3-sys-color-surface-container-low: #f4f2fa;
-  --m3-sys-color-surface-container: #eeeaf4;
-  --m3-sys-color-surface-container-high: #e8e4ee;
-  --m3-sys-color-surface-container-highest: #e2dfe8;
-
-  --m3-sys-color-on-surface: #1a1b21;
+  --m3-sys-color-surface-container-low: #ffffff;
+  --m3-sys-color-surface-container: #e8ecf4;
+  --m3-sys-color-surface-container-high: #e0e5ed;
+  --m3-sys-color-surface-container-highest: #d8dee8;
+  --m3-sys-color-on-surface: #1b1c20;
   --m3-sys-color-on-surface-variant: #44474f;
-  --m3-sys-color-outline: #74777f;
-  --m3-sys-color-outline-variant: #c4c6d0;
-
-  --m3-font-family: -apple-system, BlinkMacSystemFont, "Google Sans", "Google Sans Text", Roboto, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --m3-sys-color-outline: rgba(0, 0, 0, 0.12);
+  --m3-sys-color-outline-variant: rgba(0, 0, 0, 0.06);
+  /* Expressive Study Mastery Tokens (Light) */
+  --m3-ease-1-bg: #ffdad6;
+  --m3-ease-1-fg: #410002;
+  --m3-ease-1-border: #ffb4ab;
+  --m3-ease-1-due-color: #ba1a1a;
+  --m3-ease-1-due-bg: rgba(186, 26, 26, 0.12);
+  --m3-ease-1-kbd: #ffffff;
+  --m3-ease-1-kbd-bg: #410002;
+  --m3-ease-2-bg: #ffe0bf;
+  --m3-ease-2-fg: #2d1600;
+  --m3-ease-2-border: #ffb77a;
+  --m3-ease-2-due-color: #904d00;
+  --m3-ease-2-due-bg: rgba(144, 77, 0, 0.12);
+  --m3-ease-2-kbd: #ffffff;
+  --m3-ease-2-kbd-bg: #2d1600;
+  --m3-ease-3-bg: #d5e4ff;
+  --m3-ease-3-fg: #001d36;
+  --m3-ease-3-border: #a1c9ff;
+  --m3-ease-3-due-color: #005fb0;
+  --m3-ease-3-due-bg: rgba(0, 95, 176, 0.12);
+  --m3-ease-3-kbd: #ffffff;
+  --m3-ease-3-kbd-bg: #001d36;
+  --m3-ease-4-bg: #b6f2bd;
+  --m3-ease-4-fg: #00210e;
+  --m3-ease-4-border: #7ad788;
+  --m3-ease-4-due-color: #146c2e;
+  --m3-ease-4-due-bg: rgba(20, 108, 46, 0.12);
+  --m3-ease-4-kbd: #ffffff;
+  --m3-ease-4-kbd-bg: #00210e;
+  /* Expressive Typography Scale */
+  --m3-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Google Sans", "Google Sans Text", "SF Pro Display", Roboto, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  /* Expressive Motion & Spring Physics */
   --m3-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --m3-easing-spring-snappy: cubic-bezier(0.2, 0, 0, 1);
+  --m3-easing-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
   --m3-duration-short: 160ms;
   --m3-duration-medium: 260ms;
+  --m3-duration-long: 420ms;
+  /* Expressive Shapes */
   --m3-shape-pill: 9999px;
-  --m3-shape-card-large: 26px;
+  --m3-shape-card: 20px;
+  --m3-shape-card-large: 28px;
+  --m3-shape-small: 12px;
+  /* Expressive Layered Shadows */
+  --m3-elevation-card: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --m3-elevation-card-hover: 0 18px 40px -6px rgba(15, 23, 42, 0.12), 0 6px 16px rgba(15, 23, 42, 0.06);
+  --m3-elevation-dock: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* Dark Mode Tokens */
 @media (prefers-color-scheme: dark) {
   :root {
     --m3-sys-color-primary: #a1c9ff;
     --m3-sys-color-on-primary: #00315f;
     --m3-sys-color-primary-container: #004786;
     --m3-sys-color-on-primary-container: #d5e4ff;
-
-    --m3-sys-color-surface: #121318;
-    --m3-sys-color-surface-container-lowest: #0d0e13;
-    --m3-sys-color-surface-container-low: #1a1b21;
-    --m3-sys-color-surface-container: #1e1f25;
-    --m3-sys-color-surface-container-high: #292a30;
-    --m3-sys-color-surface-container-highest: #34343b;
-
-    --m3-sys-color-on-surface: #e2dfe8;
+    --m3-sys-color-secondary: #bcc7db;
+    --m3-sys-color-on-secondary: #263141;
+    --m3-sys-color-secondary-container: #3d4758;
+    --m3-sys-color-on-secondary-container: #d8e3f8;
+    --m3-sys-color-tertiary: #dabde2;
+    --m3-sys-color-on-tertiary: #3d2846;
+    --m3-sys-color-tertiary-container: #553e5d;
+    --m3-sys-color-on-tertiary-container: #f7d8ff;
+    --m3-sys-color-error: #ffb4ab;
+    --m3-sys-color-on-error: #690005;
+    --m3-sys-color-error-container: #93000a;
+    --m3-sys-color-on-error-container: #ffdad6;
+    --m3-sys-color-surface: #0e1116;
+    --m3-sys-color-surface-dim: #080a0d;
+    --m3-sys-color-surface-bright: #2d3340;
+    --m3-sys-color-surface-container-lowest: #14171f;
+    --m3-sys-color-surface-container-low: #181c24;
+    --m3-sys-color-surface-container: #1e232d;
+    --m3-sys-color-surface-container-high: #252b37;
+    --m3-sys-color-surface-container-highest: #2d3442;
+    --m3-sys-color-on-surface: #e2e5ec;
     --m3-sys-color-on-surface-variant: #c4c6d0;
-    --m3-sys-color-outline: #8e9099;
-    --m3-sys-color-outline-variant: #44474f;
+    --m3-sys-color-outline: rgba(255, 255, 255, 0.15);
+    --m3-sys-color-outline-variant: rgba(255, 255, 255, 0.08);
+    --m3-ease-1-bg: #410002;
+    --m3-ease-1-fg: #ffdad6;
+    --m3-ease-1-border: #93000a;
+    --m3-ease-1-due-color: #ffb4ab;
+    --m3-ease-1-due-bg: rgba(255, 180, 171, 0.15);
+    --m3-ease-1-kbd: #410002;
+    --m3-ease-1-kbd-bg: #ffdad6;
+    --m3-ease-2-bg: #301400;
+    --m3-ease-2-fg: #ffe0bf;
+    --m3-ease-2-border: #6d3300;
+    --m3-ease-2-due-color: #ffb77a;
+    --m3-ease-2-due-bg: rgba(255, 183, 122, 0.15);
+    --m3-ease-2-kbd: #301400;
+    --m3-ease-2-kbd-bg: #ffe0bf;
+    --m3-ease-3-bg: #002244;
+    --m3-ease-3-fg: #d5e4ff;
+    --m3-ease-3-border: #004488;
+    --m3-ease-3-due-color: #a1c9ff;
+    --m3-ease-3-due-bg: rgba(161, 201, 255, 0.15);
+    --m3-ease-3-kbd: #002244;
+    --m3-ease-3-kbd-bg: #d5e4ff;
+    --m3-ease-4-bg: #002d15;
+    --m3-ease-4-fg: #b6f2bd;
+    --m3-ease-4-border: #005a2c;
+    --m3-ease-4-due-color: #7ad788;
+    --m3-ease-4-due-bg: rgba(122, 215, 136, 0.15);
+    --m3-ease-4-kbd: #002d15;
+    --m3-ease-4-kbd-bg: #b6f2bd;
+    --m3-elevation-card: 0 12px 36px -6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --m3-elevation-card-hover: 0 18px 44px -6px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.4);
+    --m3-elevation-dock: 0 10px 30px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 }
-
-body.nightMode, body.night-mode, .nightMode, .night-mode, [data-theme="dark"] {
+body.nightMode, body.night-mode, .nightMode, .night-mode, [data-theme=dark], [data-bs-theme=dark] {
   --m3-sys-color-primary: #a1c9ff;
   --m3-sys-color-on-primary: #00315f;
   --m3-sys-color-primary-container: #004786;
   --m3-sys-color-on-primary-container: #d5e4ff;
-
-  --m3-sys-color-surface: #121318;
-  --m3-sys-color-surface-container-lowest: #0d0e13;
-  --m3-sys-color-surface-container-low: #1a1b21;
-  --m3-sys-color-surface-container: #1e1f25;
-  --m3-sys-color-surface-container-high: #292a30;
-  --m3-sys-color-surface-container-highest: #34343b;
-
-  --m3-sys-color-on-surface: #e2dfe8;
+  --m3-sys-color-secondary: #bcc7db;
+  --m3-sys-color-on-secondary: #263141;
+  --m3-sys-color-secondary-container: #3d4758;
+  --m3-sys-color-on-secondary-container: #d8e3f8;
+  --m3-sys-color-tertiary: #dabde2;
+  --m3-sys-color-on-tertiary: #3d2846;
+  --m3-sys-color-tertiary-container: #553e5d;
+  --m3-sys-color-on-tertiary-container: #f7d8ff;
+  --m3-sys-color-error: #ffb4ab;
+  --m3-sys-color-on-error: #690005;
+  --m3-sys-color-error-container: #93000a;
+  --m3-sys-color-on-error-container: #ffdad6;
+  --m3-sys-color-surface: #0e1116;
+  --m3-sys-color-surface-dim: #080a0d;
+  --m3-sys-color-surface-bright: #2d3340;
+  --m3-sys-color-surface-container-lowest: #14171f;
+  --m3-sys-color-surface-container-low: #181c24;
+  --m3-sys-color-surface-container: #1e232d;
+  --m3-sys-color-surface-container-high: #252b37;
+  --m3-sys-color-surface-container-highest: #2d3442;
+  --m3-sys-color-on-surface: #e2e5ec;
   --m3-sys-color-on-surface-variant: #c4c6d0;
-  --m3-sys-color-outline: #8e9099;
-  --m3-sys-color-outline-variant: #44474f;
+  --m3-sys-color-outline: rgba(255, 255, 255, 0.15);
+  --m3-sys-color-outline-variant: rgba(255, 255, 255, 0.08);
+  --m3-ease-1-bg: #410002;
+  --m3-ease-1-fg: #ffdad6;
+  --m3-ease-1-border: #93000a;
+  --m3-ease-1-due-color: #ffb4ab;
+  --m3-ease-1-due-bg: rgba(255, 180, 171, 0.15);
+  --m3-ease-1-kbd: #410002;
+  --m3-ease-1-kbd-bg: #ffdad6;
+  --m3-ease-2-bg: #301400;
+  --m3-ease-2-fg: #ffe0bf;
+  --m3-ease-2-border: #6d3300;
+  --m3-ease-2-due-color: #ffb77a;
+  --m3-ease-2-due-bg: rgba(255, 183, 122, 0.15);
+  --m3-ease-2-kbd: #301400;
+  --m3-ease-2-kbd-bg: #ffe0bf;
+  --m3-ease-3-bg: #002244;
+  --m3-ease-3-fg: #d5e4ff;
+  --m3-ease-3-border: #004488;
+  --m3-ease-3-due-color: #a1c9ff;
+  --m3-ease-3-due-bg: rgba(161, 201, 255, 0.15);
+  --m3-ease-3-kbd: #002244;
+  --m3-ease-3-kbd-bg: #d5e4ff;
+  --m3-ease-4-bg: #002d15;
+  --m3-ease-4-fg: #b6f2bd;
+  --m3-ease-4-border: #005a2c;
+  --m3-ease-4-due-color: #7ad788;
+  --m3-ease-4-due-bg: rgba(122, 215, 136, 0.15);
+  --m3-ease-4-kbd: #002d15;
+  --m3-ease-4-kbd-bg: #b6f2bd;
+  --m3-elevation-card: 0 12px 36px -6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --m3-elevation-card-hover: 0 18px 44px -6px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.4);
+  --m3-elevation-dock: 0 10px 30px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -81,27 +223,77 @@ body {
   color: var(--m3-sys-color-on-surface);
   user-select: none;
   -webkit-user-select: none;
+  min-height: 100vh;
   transition: background-color var(--m3-duration-medium) ease;
 }
 
 .m3-deckbrowser-container {
-  max-width: 920px;
-  margin: 20px auto;
-  padding: 0 16px;
+  max-width: 860px;
+  margin: 28px auto 36px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 /* Elevated M3 Expressive Card Container for the Deck List */
-.m3-deck-card-wrapper {
+.m3-deck-card-wrapper,
+center > table {
   width: 100%;
+  max-width: 860px;
   background: var(--m3-sys-color-surface-container-low);
-  border-radius: var(--m3-shape-card-large, 26px);
+  border-radius: var(--m3-shape-card-large, 28px);
   border: 1px solid var(--m3-sys-color-outline-variant);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-  padding: 14px 20px 20px 20px;
+  box-shadow: var(--m3-elevation-card);
+  padding: 24px 28px 24px 28px;
+  margin: 0 auto;
   transition: background var(--m3-duration-medium) ease, box-shadow var(--m3-duration-medium) ease;
+}
+
+/* Card Header */
+.m3-deck-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--m3-sys-color-outline-variant);
+}
+
+.m3-deck-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.m3-deck-header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--m3-sys-color-primary);
+}
+
+.m3-svg-icon {
+  display: block;
+  fill: currentColor;
+}
+
+.m3-deck-header-text {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--m3-sys-color-on-surface);
+}
+
+.m3-deck-header-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--m3-shape-pill);
+  background: var(--m3-sys-color-primary-container);
+  color: var(--m3-sys-color-on-primary-container);
 }
 
 .m3-deck-table {
@@ -111,38 +303,53 @@ body {
 }
 
 /* Header Row */
-.m3-tree-head th {
+.m3-tree-head th,
+center > table tr:first-child th {
   color: var(--m3-sys-color-on-surface-variant);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  padding: 8px 12px 12px 12px;
-  border-bottom: 1.5px solid var(--m3-sys-color-outline-variant);
+  padding: 8px 14px 12px 14px;
+  border-bottom: 1px solid var(--m3-sys-color-outline-variant);
 }
 
 .m3-th-deck {
   text-align: left;
 }
 
-.m3-th-new { color: var(--m3-sys-color-primary) !important; }
-.m3-th-learn { color: #b35c00 !important; }
-.m3-th-review { color: #007a3d !important; }
+.m3-th-new {
+  color: var(--m3-sys-color-primary) !important;
+}
 
-body.nightMode .m3-th-new, body.night-mode .m3-th-new { color: #a1c9ff !important; }
-body.nightMode .m3-th-learn, body.night-mode .m3-th-learn { color: #ffb870 !important; }
-body.nightMode .m3-th-review, body.night-mode .m3-th-review { color: #6cda8f !important; }
+.m3-th-learn {
+  color: #904d00 !important;
+}
+
+.m3-th-review {
+  color: #146c2e !important;
+}
+
+body.nightMode .m3-th-new, body.night-mode .m3-th-new {
+  color: #a1c9ff !important;
+}
+
+body.nightMode .m3-th-learn, body.night-mode .m3-th-learn {
+  color: #ffb77a !important;
+}
+
+body.nightMode .m3-th-review, body.night-mode .m3-th-review {
+  color: #7ad788 !important;
+}
 
 /* Deck Rows (Styled as rounded list items with spring hover) */
 tr.deck {
-  transition: transform var(--m3-duration-short) var(--m3-easing-spring),
-              background var(--m3-duration-short) ease,
-              box-shadow var(--m3-duration-short) ease;
+  transition: transform var(--m3-duration-short) var(--m3-easing-spring), background var(--m3-duration-short) ease, box-shadow var(--m3-duration-short) ease;
 }
 
 tr.deck td {
-  padding: 10px 12px;
-  white-space: nowrap;
+  padding: 12px 14px;
+  vertical-align: middle;
 }
 
 tr.deck td:first-child {
@@ -157,12 +364,13 @@ tr.deck td:last-child {
 
 tr.deck:hover:not(.top-level-drag-row) {
   background: var(--m3-sys-color-surface-container);
-  transform: translateY(-1.5px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1.5px) scale(1.006);
+  box-shadow: 0 4px 16px rgba(11, 87, 208, 0.06);
 }
 
 tr.deck.current {
-  background: var(--m3-sys-color-surface-container-high);
+  background: var(--m3-sys-color-primary-container);
+  color: var(--m3-sys-color-on-primary-container);
 }
 
 tr.deck.current td:first-child {
@@ -172,12 +380,30 @@ tr.deck.current td:first-child {
 /* Deck Name & Expand Collapse */
 a.deck {
   color: var(--m3-sys-color-on-surface);
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 600;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   vertical-align: middle;
   transition: color var(--m3-duration-short) ease;
+}
+
+.m3-deck-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--m3-sys-color-primary);
+}
+
+.m3-deck-svg {
+  display: block;
+  fill: currentColor;
+}
+
+.m3-deck-name {
+  letter-spacing: -0.1px;
 }
 
 a.deck:hover {
@@ -190,7 +416,7 @@ a.collapse {
   font-weight: 700;
   font-size: 16px;
   display: inline-block;
-  width: 20px;
+  width: 22px;
   text-align: center;
   margin-right: 4px;
   vertical-align: middle;
@@ -204,55 +430,46 @@ a.collapse:hover {
 }
 
 /* Count Pills */
-.m3-count-col {
+.m3-count-col,
+center > table td.count {
   padding: 8px 12px;
+  text-align: right;
 }
 
 .m3-badge {
-  min-width: 28px;
-  height: 26px;
+  min-width: 32px;
+  height: 28px;
   border-radius: var(--m3-shape-pill);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
-  font-size: 12px;
-  font-weight: 700;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.2px;
 }
 
-.m3-badge-new-count {
-  background: rgba(0, 95, 176, 0.14);
-  color: var(--m3-sys-color-primary);
+.m3-badge-new-count,
+.new-count {
+  background: var(--m3-ease-3-due-bg);
+  color: var(--m3-ease-3-due-color);
 }
 
-.m3-badge-learn-count {
-  background: rgba(186, 114, 0, 0.15);
-  color: #b35c00;
+.m3-badge-learn-count,
+.learn-count {
+  background: var(--m3-ease-2-due-bg);
+  color: var(--m3-ease-2-due-color);
 }
 
-.m3-badge-review-count {
-  background: rgba(0, 110, 59, 0.14);
-  color: #007a3d;
+.m3-badge-review-count,
+.review-count {
+  background: var(--m3-ease-4-due-bg);
+  color: var(--m3-ease-4-due-color);
 }
 
-body.nightMode .m3-badge-new-count, body.night-mode .m3-badge-new-count {
-  background: rgba(161, 201, 255, 0.18);
-  color: #a1c9ff;
-}
-
-body.nightMode .m3-badge-learn-count, body.night-mode .m3-badge-learn-count {
-  background: rgba(255, 184, 112, 0.18);
-  color: #ffb870;
-}
-
-body.nightMode .m3-badge-review-count, body.night-mode .m3-badge-review-count {
-  background: rgba(108, 218, 143, 0.18);
-  color: #6cda8f;
-}
-
-.m3-badge.zero-count {
+.m3-badge.zero-count,
+.zero-count {
   background: transparent;
   color: var(--m3-sys-color-outline);
   opacity: 0.35;
@@ -260,8 +477,8 @@ body.nightMode .m3-badge-review-count, body.night-mode .m3-badge-review-count {
 
 /* Gears Action Icon */
 .m3-gear-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--m3-shape-pill);
   display: inline-flex;
   align-items: center;
@@ -287,85 +504,30 @@ body.nightMode .m3-badge-review-count, body.night-mode .m3-badge-review-count {
 }
 
 /* Studied Today Stats Card */
-.m3-deck-stats {
-  margin-top: 20px;
+.m3-studied-today,
+#studiedToday {
+  margin: 28px auto 0;
   text-align: center;
 }
 
-.m3-studied-today {
-  display: inline-block;
-  background: var(--m3-sys-color-surface-container);
-  color: var(--m3-sys-color-on-surface-variant);
-  border-radius: var(--m3-shape-pill);
-  padding: 8px 24px;
-  font-size: 13px;
-  font-weight: 600;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* Bottom Actions Bar (Create Deck, Shared, Import) */
-.m3-deck-actions-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 12px 20px;
-  background: var(--m3-sys-color-surface-container-low);
-  border-top: 1px solid var(--m3-sys-color-outline-variant);
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
-  width: 100%;
-}
-
-.m3-deck-action-btn {
-  height: 44px;
-  border-radius: var(--m3-shape-pill);
-  background: var(--m3-sys-color-surface-container-high);
-  color: var(--m3-sys-color-on-surface);
-  border: 1px solid var(--m3-sys-color-outline-variant);
-  padding: 0 18px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+.m3-studied-today span,
+#studiedToday {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  outline: none;
-  transition: transform var(--m3-duration-short) var(--m3-easing-spring),
-              background var(--m3-duration-short) ease,
-              box-shadow var(--m3-duration-short) ease;
-}
-
-.m3-deck-action-btn:hover {
-  background: var(--m3-sys-color-surface-container-highest);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.m3-deck-action-btn:active {
-  transform: translateY(1px) scale(0.97);
-}
-
-.m3-deck-action-btn:focus-visible {
-  outline: 3px solid var(--m3-sys-color-primary);
-  outline-offset: 2px;
-}
-
-.m3-action-create {
-  background: var(--m3-sys-color-primary-container);
-  color: var(--m3-sys-color-on-primary-container);
-  border-color: rgba(0, 95, 176, 0.2);
-}
-
-.m3-action-create:hover {
-  filter: brightness(1.05);
-}
-
-.m3-deck-action-btn .m3-kbd {
-  background: var(--m3-sys-color-surface-container-lowest);
+  background: var(--m3-sys-color-surface-container-low);
   border: 1px solid var(--m3-sys-color-outline-variant);
+  border-radius: var(--m3-shape-pill);
+  padding: 10px 24px;
+  font-size: 13.5px;
+  font-weight: 600;
   color: var(--m3-sys-color-on-surface-variant);
-  border-radius: 6px;
-  padding: 1px 6px;
-  font-size: 10px;
-  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* Drag & Drop top row spacing */
+tr.top-level-drag-row td {
+  padding: 4px;
+  height: 4px;
 }

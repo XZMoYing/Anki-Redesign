@@ -13,111 +13,133 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--m3-font-family);
-  background: var(--m3-sys-color-surface-container);
+  background: var(--m3-sys-color-surface);
   color: var(--m3-sys-color-on-surface);
   user-select: none;
   -webkit-user-select: none;
   overflow: hidden;
-  height: 52px;
+  height: 54px;
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 6px 16px;
-  height: 52px;
-  background: var(--m3-sys-color-surface-container);
-  border-bottom: 1px solid var(--m3-sys-color-outline-variant);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  height: 54px;
+  background: transparent;
+  position: relative;
 }
 
 .left-tray,
 .right-tray {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: 60px;
 }
 
+.left-tray { left: 16px; }
+.right-tray { right: 16px; }
+
+/* Floating Segmented Pill Nav Group */
 .toolbar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--m3-shape-pill);
+  padding: 4px 6px;
+  border: 1px solid var(--m3-sys-color-outline-variant);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+body.nightMode .toolbar,
+body.night-mode .toolbar {
+  background: rgba(24, 28, 36, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 /* Expressive Navigation Segments */
-.m3-nav-item {
+.m3-nav-item,
+.hitem {
   height: 38px;
   border-radius: var(--m3-shape-pill);
-  padding: 0 14px;
+  padding: 0 16px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: var(--m3-sys-color-on-surface);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
   outline: none;
-  border: 1px solid transparent;
+  border: none;
+  background: transparent;
   transition: transform var(--m3-duration-short) var(--m3-easing-spring),
               background var(--m3-duration-short) ease,
-              box-shadow var(--m3-duration-short) ease,
               color var(--m3-duration-short) ease;
 }
 
-.m3-nav-item:hover {
-  background: var(--m3-sys-color-surface-container-high);
-  color: var(--m3-sys-color-primary);
+.m3-nav-item:hover,
+.hitem:hover {
+  background: var(--m3-sys-color-primary-container);
+  color: var(--m3-sys-color-on-primary-container);
   transform: translateY(-1px) scale(1.02);
 }
 
-.m3-nav-item:active {
+.m3-nav-item:active,
+.hitem:active {
   transform: translateY(1px) scale(0.97);
 }
 
-.m3-nav-item:focus-visible {
+.m3-nav-item:focus-visible,
+.hitem:focus-visible {
   outline: 3px solid var(--m3-sys-color-primary);
   outline-offset: 2px;
 }
 
 /* Keycap Shortcut Indicator */
-.m3-nav-item .m3-kbd {
-  font-size: 10px;
-  font-weight: 700;
-  border-radius: 5px;
-  padding: 1px 5px;
-  background: var(--m3-sys-color-surface-container-lowest);
-  border: 1px solid var(--m3-sys-color-outline-variant);
-  color: var(--m3-sys-color-on-surface-variant);
+.m3-nav-item .m3-kbd,
+.m3-kbd {
+  font-size: 10.5px;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+}
+
+body.nightMode .m3-kbd,
+body.night-mode .m3-kbd {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /* Sync Button Icon & Rotation */
-.m3-sync-icon {
-  width: 14px;
-  height: 14px;
+.m3-sync-icon,
+#sync-spinner {
+  width: 15px;
+  height: 15px;
   vertical-align: middle;
-  opacity: 0.8;
+  opacity: 0.85;
   transition: transform 0.3s ease;
 }
 
-.syncing #sync-spinner {
+.spin,
+#sync-spinner.spin {
   animation: m3-spin 1s linear infinite;
 }
 
 @keyframes m3-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-@media (max-width: 600px) {
-  .m3-nav-item {
-    padding: 0 10px;
-    font-size: 12px;
-  }
-  .m3-nav-item .m3-kbd {
-    display: none;
-  }
 }
