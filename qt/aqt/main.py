@@ -580,6 +580,10 @@ class AnkiQt(QMainWindow):
         self.pm.save()
         self.hide()
 
+        self._embeddedAddCards = None
+        self._embeddedBrowser = None
+        self._embeddedStats = None
+
         self.restoring_backup = False
 
         # at this point there should be no windows left
@@ -769,6 +773,8 @@ class AnkiQt(QMainWindow):
 
     def moveToState(self, state: MainWindowState, *args: Any) -> None:
         # print("-> move from", self.state, "to", state)
+        if hasattr(self, "slidingStack") and self.slidingStack.currentIndex() != 0:
+            self.switchToTab(0)
         oldState = self.state
         cleanup = getattr(self, f"_{oldState}Cleanup", None)
         if cleanup:
@@ -968,13 +974,51 @@ title="{}" {}>{}</button>""".format(
         sweb = self.bottomWeb = BottomWebView(self)
         sweb.setFocusPolicy(Qt.FocusPolicy.WheelFocus)
         sweb.disable_zoom()
-        # add in a layout
+
+        # Sliding stacked widget for in-window seamless navigation
+        from aqt.sliding_stack import SlidingStackedWidget
+
+        self.slidingStack = SlidingStackedWidget(self)
+
+        # Tab 0: Deck Browser & Study Reviewer (Main web + bottom dock)
+        self.studyContainer = QWidget(self)
+        study_layout = QVBoxLayout(self.studyContainer)
+        study_layout.setContentsMargins(0, 0, 0, 0)
+        study_layout.setSpacing(0)
+        study_layout.addWidget(self.web)
+        study_layout.addWidget(sweb)
+        self.slidingStack.addWidget(self.studyContainer)
+
+        # Tab 1: Add Cards container
+        self.addCardsContainer = QWidget(self)
+        add_layout = QVBoxLayout(self.addCardsContainer)
+        add_layout.setContentsMargins(0, 0, 0, 0)
+        add_layout.setSpacing(0)
+        self.slidingStack.addWidget(self.addCardsContainer)
+        self._embeddedAddCards = None
+
+        # Tab 2: Browser container
+        self.browserContainer = QWidget(self)
+        browser_layout = QVBoxLayout(self.browserContainer)
+        browser_layout.setContentsMargins(0, 0, 0, 0)
+        browser_layout.setSpacing(0)
+        self.slidingStack.addWidget(self.browserContainer)
+        self._embeddedBrowser = None
+
+        # Tab 3: Stats container
+        self.statsContainer = QWidget(self)
+        stats_layout = QVBoxLayout(self.statsContainer)
+        stats_layout.setContentsMargins(0, 0, 0, 0)
+        stats_layout.setSpacing(0)
+        self.slidingStack.addWidget(self.statsContainer)
+        self._embeddedStats = None
+
+        # Main window layout
         self.mainLayout = QVBoxLayout()
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
         self.mainLayout.setSpacing(0)
         self.mainLayout.addWidget(tweb)
-        self.mainLayout.addWidget(self.web)
-        self.mainLayout.addWidget(sweb)
+        self.mainLayout.addWidget(self.slidingStack)
         self.form.centralwidget.setLayout(self.mainLayout)
 
         # force webengine processes to load before cwd is changed
@@ -1310,16 +1354,75 @@ title="{}" {}>{}</button>""".format(
             name = f"New{name}"
         return aqt.dialogs.open(name, self, *args, **kwargs)
 
-    def onAddCard(self) -> None:
-        from aqt.addcards import NewAddCards
+    def switchToTab(self, index: int, **kwargs: Any) -> None:
+        tab_names = {0: "decks", 1: "add", 2: "browse", 3: "stats"}
+        tab_id = tab_names.get(index, "decks")
+        self.toolbar.setActiveNav(tab_id)
 
-        experimental = self.col.experiment_enabled(ExperimentFlag.SVELTE_EDITOR)
-        add_cards = self._open_new_or_legacy_dialog("AddCards", experimental)
-        if isinstance(add_cards, NewAddCards):
-            add_cards.load_new_note()
+        if index == 0:
+            to_deck_browser = kwargs.get("to_deck_browser", False)
+            if to_deck_browser and self.state != "deckBrowser":
+                self.moveToState("deckBrowser")
+            self.slidingStack.slideToIndex(0)
+            self.web.setFocus()
+
+        elif index == 1:
+            if not self._embeddedAddCards:
+                from aqt.addcards_legacy import AddCards
+
+                self._embeddedAddCards = AddCards(
+                    self,
+                    parent=self.addCardsContainer,
+                    window_type=Qt.WindowType.Widget,
+                )
+                self.addCardsContainer.layout().addWidget(self._embeddedAddCards)
+                aqt.dialogs._dialogs["AddCards"][1] = self._embeddedAddCards
+            else:
+                self._embeddedAddCards._load_new_note()
+            self.slidingStack.slideToIndex(1)
+            self._embeddedAddCards.setFocus()
+
+        elif index == 2:
+            card = kwargs.get("card", getattr(self.reviewer, "card", None))
+            search = kwargs.get("search", None)
+            if not self._embeddedBrowser:
+                from aqt.browser.browser import Browser
+
+                self._embeddedBrowser = Browser(
+                    self,
+                    card=card,
+                    search=search,
+                    parent=self.browserContainer,
+                    window_type=Qt.WindowType.Widget,
+                )
+                self.browserContainer.layout().addWidget(self._embeddedBrowser)
+                aqt.dialogs._dialogs["Browser"][1] = self._embeddedBrowser
+            elif search or card:
+                self._embeddedBrowser.setupSearch(card=card, search=search)
+            self.slidingStack.slideToIndex(2)
+            self._embeddedBrowser.setFocus()
+
+        elif index == 3:
+            if not self._embeddedStats:
+                from aqt.stats import NewDeckStats
+
+                self._embeddedStats = NewDeckStats(
+                    self,
+                    parent=self.statsContainer,
+                    window_type=Qt.WindowType.Widget,
+                )
+                self.statsContainer.layout().addWidget(self._embeddedStats)
+                aqt.dialogs._dialogs["NewDeckStats"][1] = self._embeddedStats
+                aqt.dialogs._dialogs["DeckStats"][1] = self._embeddedStats
+            else:
+                self._embeddedStats.refresh()
+            self.slidingStack.slideToIndex(3)
+
+    def onAddCard(self) -> None:
+        self.switchToTab(1)
 
     def onBrowse(self) -> None:
-        aqt.dialogs.open("Browser", self, card=self.reviewer.card)
+        self.switchToTab(2, card=getattr(self.reviewer, "card", None))
 
     def onEditCurrent(self) -> None:
         experimental = self.col.experiment_enabled(ExperimentFlag.SVELTE_EDITOR)
@@ -1329,10 +1432,7 @@ title="{}" {}>{}</button>""".format(
         self.moveToState("overview")
 
     def onStats(self) -> None:
-        deck = self._selectedDeck()
-        if not deck:
-            return
-        self._open_new_or_legacy_dialog("DeckStats", True)
+        self.switchToTab(3)
 
     def onPrefs(self) -> None:
         aqt.dialogs.open("Preferences", self)

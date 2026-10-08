@@ -89,31 +89,46 @@ button:active {
 
 /* Primary Button: Create Deck (创建牌组) */
 .m3-action-create {
-  background: var(--m3-sys-color-primary);
-  color: var(--m3-sys-color-on-primary);
+  background: var(--m3-sys-color-primary) !important;
+  color: #ffffff !important;
+  border: none !important;
   padding: 0 22px;
   box-shadow: 0 4px 14px rgba(11, 87, 208, 0.35);
 }
 
 .m3-action-create:hover {
+  background: #006be5 !important;
+  color: #ffffff !important;
+  border: none !important;
+  filter: brightness(1.08);
   transform: translateY(-2px) scale(1.025);
-  box-shadow: 0 8px 22px rgba(11, 87, 208, 0.45);
+  box-shadow: 0 8px 22px rgba(11, 87, 208, 0.45) !important;
 }
 
 .m3-action-create .m3-kbd {
-  background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+body.nightMode .m3-action-create:hover,
+body.night-mode .m3-action-create:hover {
+  background: #b8d6ff !important;
+  color: #00325b !important;
+  border: none !important;
 }
 
 /* Secondary Tonal Button: Import (导入文件) */
 .m3-action-import {
-  background: var(--m3-sys-color-surface-container-high);
-  color: var(--m3-sys-color-on-surface);
+  background: var(--m3-sys-color-surface-container-high) !important;
+  color: var(--m3-sys-color-on-surface) !important;
+  border: none !important;
   padding: 0 18px;
 }
 
 .m3-action-import:hover {
-  background: var(--m3-sys-color-surface-container-highest);
+  background: var(--m3-sys-color-surface-container-highest) !important;
+  color: var(--m3-sys-color-on-surface) !important;
+  border: none !important;
   transform: translateY(-2px) scale(1.02);
 }
 
@@ -124,14 +139,15 @@ button:active {
 
 /* Tertiary Outlined Button: Shared (获取共享牌组) */
 .m3-action-shared {
-  background: transparent;
-  color: var(--m3-sys-color-on-surface);
-  border: 1.5px solid var(--m3-sys-color-outline);
+  background: transparent !important;
+  color: var(--m3-sys-color-on-surface) !important;
+  border: 1.5px solid var(--m3-sys-color-outline) !important;
   padding: 0 18px;
 }
 
 .m3-action-shared:hover {
-  background: var(--m3-sys-color-surface-container);
+  background: var(--m3-sys-color-surface-container) !important;
+  color: var(--m3-sys-color-on-surface) !important;
   transform: translateY(-2px) scale(1.02);
 }
 

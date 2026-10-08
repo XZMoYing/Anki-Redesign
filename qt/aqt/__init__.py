@@ -134,6 +134,19 @@ class DialogManager:
     _activeWindow = None
 
     def open(self, name: str, *args: Any, **kwargs: Any) -> Any:
+        if aqt.mw and hasattr(aqt.mw, "switchToTab"):
+            if name in ("AddCards", "NewAddCards"):
+                aqt.mw.switchToTab(1)
+                return aqt.mw._embeddedAddCards
+            elif name == "Browser":
+                card = kwargs.get("card", None)
+                search = kwargs.get("search", None)
+                aqt.mw.switchToTab(2, card=card, search=search)
+                return aqt.mw._embeddedBrowser
+            elif name in ("DeckStats", "NewDeckStats"):
+                aqt.mw.switchToTab(3)
+                return aqt.mw._embeddedStats
+
         (creator, instance) = self._dialogs[name]
         if instance:
             if instance.windowState() & Qt.WindowState.WindowMinimized:

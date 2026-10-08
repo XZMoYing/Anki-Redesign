@@ -22,8 +22,14 @@ from aqt.utils import (
 
 
 class NewAddCards(QMainWindow):
-    def __init__(self, mw: AnkiQt) -> None:
-        super().__init__(None, Qt.WindowType.Window)
+    def __init__(
+        self,
+        mw: AnkiQt,
+        parent: QWidget | None = None,
+        window_type: Qt.WindowType = Qt.WindowType.Window,
+    ) -> None:
+        super().__init__(parent, window_type)
+        self._is_embedded = window_type == Qt.WindowType.Widget
         self._close_event_has_cleaned_up = False
         self._close_callback: Callable[[], None] = self._close
         self.mw = mw
@@ -36,12 +42,23 @@ class NewAddCards(QMainWindow):
         self.setMinimumWidth(400)
         self.form.verticalLayout_3.setSpacing(0)
         self.setupEditor()
-        restoreGeom(self, "add")
-        gui_hooks.add_cards_did_init(self)
-        if not is_mac:
+        if self._is_embedded:
+            self.setWindowFlag(Qt.WindowType.Window, False)
+            self.setWindowFlag(Qt.WindowType.Widget, True)
             self.setMenuBar(None)
+        else:
+            restoreGeom(self, "add")
+            if not is_mac:
+                self.setMenuBar(None)
+        gui_hooks.add_cards_did_init(self)
         self.show()
         self.setFocus()
+
+    def close(self) -> bool:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            return True
+        return super().close()
 
     def set_note(self, note: Note, deck_id: DeckId | None = None) -> None:
         """Set tags, field contents and notetype according to `note`. Deck is set

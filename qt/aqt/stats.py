@@ -30,9 +30,20 @@ from aqt.webview import LegacyStatsWebView
 class NewDeckStats(QDialog):
     """New deck stats."""
 
-    def __init__(self, mw: aqt.main.AnkiQt) -> None:
-        QDialog.__init__(self, mw, Qt.WindowType.Window)
-        mw.garbage_collect_on_dialog_finish(self)
+    def __init__(
+        self,
+        mw: aqt.main.AnkiQt,
+        parent: QWidget | None = None,
+        window_type: Qt.WindowType = Qt.WindowType.Window,
+    ) -> None:
+        QDialog.__init__(self, parent or mw, window_type)
+        self._is_embedded = window_type == Qt.WindowType.Widget
+        if self._is_embedded:
+            self.setWindowFlag(Qt.WindowType.Window, False)
+            self.setWindowFlag(Qt.WindowType.Dialog, False)
+            self.setWindowFlag(Qt.WindowType.Widget, True)
+        else:
+            mw.garbage_collect_on_dialog_finish(self)
         self.mw = mw
         self.name = "deckStats"
         self.period = 0
@@ -47,7 +58,8 @@ class NewDeckStats(QDialog):
         f.groupBox_2.setVisible(False)
         if not is_mac:
             f.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        restoreGeom(self, self.name, default_size=(800, 800))
+        if not self._is_embedded:
+            restoreGeom(self, self.name, default_size=(800, 800))
 
         from aqt.deckchooser import DeckChooser
 
@@ -67,15 +79,27 @@ class NewDeckStats(QDialog):
         b = f.buttonBox.button(QDialogButtonBox.StandardButton.Close)
         assert b is not None
         b.setAutoDefault(False)
+        if self._is_embedded:
+            qconnect(b.clicked, lambda: self.mw.switchToTab(0))
         maybeHideClose(self.form.buttonBox)
         gui_hooks.stats_dialog_will_show(self)
         self.form.web.hide_while_preserving_layout()
         self.show()
         self.refresh()
         self.form.web.set_bridge_command(self._on_bridge_cmd, self)
-        self.activateWindow()
+        if not self._is_embedded:
+            self.activateWindow()
+
+    def close(self) -> bool:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            return True
+        return super().close()
 
     def reject(self) -> None:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            return
         self.deck_chooser.cleanup()
         self.form.web.cleanup()
         self.form.web = None  # type: ignore

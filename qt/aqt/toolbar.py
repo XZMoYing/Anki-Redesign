@@ -339,10 +339,13 @@ class Toolbar:
         elif tip and "(" in tip:
             shortcut_char = tip.split("(")[-1].replace(")", "").strip()
 
-        kbd_badge = f"<kbd class='m3-kbd'>{shortcut_char}</kbd>" if shortcut_char else ""
+        kbd_badge = (
+            f"<kbd class='m3-kbd'>{shortcut_char}</kbd>" if shortcut_char else ""
+        )
+        active_class = " active" if id == "decks" else ""
 
         return (
-            f"""<a class="hitem m3-nav-item" tabindex="0" aria-label="{label}" """
+            f"""<a class="hitem m3-nav-item{active_class}" tabindex="0" aria-label="{label}" """
             f"""{title_attr} {id_attr} href=# onclick="return pycmd('{cmd}')">"""
             f"""<span class="m3-nav-label">{label}</span>{kbd_badge}</a>"""
         )
@@ -429,6 +432,18 @@ class Toolbar:
     def update_sync_status(self) -> None:
         get_sync_status(self.mw, self.mw.toolbar.set_sync_status)
 
+    def setActiveNav(self, tab_id: str) -> None:
+        self.web.eval(
+            f"""(function() {{
+                const items = document.querySelectorAll('.m3-nav-item');
+                items.forEach(el => el.classList.remove('active'));
+                const target = document.getElementById('{tab_id}');
+                if (target) {{
+                    target.classList.add('active');
+                }}
+            }})();"""
+        )
+
     # Link handling
     ######################################################################
 
@@ -438,9 +453,20 @@ class Toolbar:
         return False
 
     def _deckLinkHandler(self) -> None:
-        self.mw.moveToState("deckBrowser")
+        if (
+            hasattr(self.mw, "slidingStack")
+            and self.mw.slidingStack.currentIndex() != 0
+        ):
+            self.mw.switchToTab(0, to_deck_browser=True)
+        else:
+            self.mw.moveToState("deckBrowser")
 
     def _studyLinkHandler(self) -> None:
+        if (
+            hasattr(self.mw, "slidingStack")
+            and self.mw.slidingStack.currentIndex() != 0
+        ):
+            self.mw.switchToTab(0)
         # if overview already shown, switch to review
         if self.mw.state == "overview":
             self.mw.col.startTimebox()
@@ -449,13 +475,22 @@ class Toolbar:
             self.mw.onOverview()
 
     def _addLinkHandler(self) -> None:
-        self.mw.onAddCard()
+        if hasattr(self.mw, "switchToTab"):
+            self.mw.switchToTab(1)
+        else:
+            self.mw.onAddCard()
 
     def _browseLinkHandler(self) -> None:
-        self.mw.onBrowse()
+        if hasattr(self.mw, "switchToTab"):
+            self.mw.switchToTab(2)
+        else:
+            self.mw.onBrowse()
 
     def _statsLinkHandler(self) -> None:
-        self.mw.onStats()
+        if hasattr(self.mw, "switchToTab"):
+            self.mw.switchToTab(3)
+        else:
+            self.mw.onStats()
 
     def _syncLinkHandler(self) -> None:
         self.mw.on_sync_button_clicked()

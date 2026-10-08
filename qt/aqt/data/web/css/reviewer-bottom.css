@@ -300,7 +300,9 @@ body.night-mode #outer {
 
 .m3-pill-btn:hover,
 .stat button:hover {
-  background: var(--m3-sys-color-surface-container-highest);
+  background: var(--m3-sys-color-surface-container-highest) !important;
+  color: var(--m3-sys-color-on-surface) !important;
+  border-color: var(--m3-sys-color-outline) !important;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
@@ -462,12 +464,29 @@ body.nightMode .review-count, body.night-mode .review-count {
 
 .m3-show-ans-btn:hover,
 #ansbut:hover {
+  background: #006be5 !important;
+  color: #ffffff !important;
+  border: none !important;
+  filter: brightness(1.08);
   transform: translateY(-2.5px) scale(1.02);
-  box-shadow: 0 8px 26px rgba(11, 87, 208, 0.45);
+  box-shadow: 0 8px 26px rgba(11, 87, 208, 0.45) !important;
+}
+
+body.nightMode .m3-show-ans-btn:hover,
+body.nightMode #ansbut:hover,
+body.night-mode .m3-show-ans-btn:hover,
+body.night-mode #ansbut:hover {
+  background: #b8d6ff !important;
+  color: #00325b !important;
+  border: none !important;
+  box-shadow: 0 8px 26px rgba(161, 201, 255, 0.35) !important;
 }
 
 .m3-show-ans-btn:active,
 #ansbut:active {
+  background: #005096 !important;
+  color: #ffffff !important;
+  border: none !important;
   transform: translateY(1px) scale(0.97);
 }
 
@@ -641,7 +660,11 @@ body.nightMode .review-count, body.night-mode .review-count {
 
 #middle button[data-ease="1"]:hover,
 .m3-ease-btn-1:hover {
-  box-shadow: 0 12px 28px rgba(186, 26, 26, 0.28);
+  background: var(--m3-ease-1-bg) !important;
+  color: var(--m3-ease-1-fg) !important;
+  border-color: var(--m3-ease-1-border) !important;
+  box-shadow: 0 12px 28px rgba(186, 26, 26, 0.28) !important;
+  filter: brightness(1.05);
 }
 
 /* Button 2: Hard (困难) - Expressive Amber Warm */
@@ -666,7 +689,11 @@ body.nightMode .review-count, body.night-mode .review-count {
 
 #middle button[data-ease="2"]:hover,
 .m3-ease-btn-2:hover {
-  box-shadow: 0 12px 28px rgba(144, 77, 0, 0.28);
+  background: var(--m3-ease-2-bg) !important;
+  color: var(--m3-ease-2-fg) !important;
+  border-color: var(--m3-ease-2-border) !important;
+  box-shadow: 0 12px 28px rgba(144, 77, 0, 0.28) !important;
+  filter: brightness(1.05);
 }
 
 /* Button 3: Good (良好) - Expressive Azure Ocean */
@@ -691,7 +718,11 @@ body.nightMode .review-count, body.night-mode .review-count {
 
 #middle button[data-ease="3"]:hover,
 .m3-ease-btn-3:hover {
-  box-shadow: 0 12px 28px rgba(0, 95, 176, 0.28);
+  background: var(--m3-ease-3-bg) !important;
+  color: var(--m3-ease-3-fg) !important;
+  border-color: var(--m3-ease-3-border) !important;
+  box-shadow: 0 12px 28px rgba(0, 95, 176, 0.28) !important;
+  filter: brightness(1.05);
 }
 
 /* Button 4: Easy (容易) - Expressive Spring Mint */
@@ -716,7 +747,11 @@ body.nightMode .review-count, body.night-mode .review-count {
 
 #middle button[data-ease="4"]:hover,
 .m3-ease-btn-4:hover {
-  box-shadow: 0 12px 28px rgba(20, 108, 46, 0.28);
+  background: var(--m3-ease-4-bg) !important;
+  color: var(--m3-ease-4-fg) !important;
+  border-color: var(--m3-ease-4-border) !important;
+  box-shadow: 0 12px 28px rgba(20, 108, 46, 0.28) !important;
+  filter: brightness(1.05);
 }
 
 /* Milestone Celebration & Shake Effects */

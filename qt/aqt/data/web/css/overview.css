@@ -351,17 +351,18 @@ body.nightMode .review-count, body.night-mode .review-count {
   width: 100%;
 }
 
+#study.m3-hero-study-btn,
 .m3-hero-study-btn {
   height: 56px;
   width: 100%;
   max-width: 380px;
   border-radius: var(--m3-shape-pill);
-  background: var(--m3-sys-color-primary);
-  color: var(--m3-sys-color-on-primary);
+  background: var(--m3-sys-color-primary) !important;
+  color: #ffffff !important;
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.3px;
-  border: none;
+  border: none !important;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -369,18 +370,60 @@ body.nightMode .review-count, body.night-mode .review-count {
   gap: 12px;
   box-shadow: 0 4px 16px rgba(0, 95, 176, 0.28);
   outline: none;
-  transition: transform var(--m3-duration-short) var(--m3-easing-spring), box-shadow var(--m3-duration-short) ease, background-color var(--m3-duration-short) ease;
+  transition: transform var(--m3-duration-short) var(--m3-easing-spring), box-shadow var(--m3-duration-short) ease, background var(--m3-duration-short) ease, filter var(--m3-duration-short) ease;
 }
 
+#study.m3-hero-study-btn:hover,
 .m3-hero-study-btn:hover {
+  background: #006be5 !important;
+  color: #ffffff !important;
+  border: none !important;
+  filter: brightness(1.08);
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 95, 176, 0.38);
+  box-shadow: 0 8px 24px rgba(0, 95, 176, 0.42) !important;
 }
 
+#study.m3-hero-study-btn:active,
 .m3-hero-study-btn:active {
-  transform: translateY(1px) scale(0.97);
+  background: #005096 !important;
+  color: #ffffff !important;
+  border: none !important;
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 95, 176, 0.25) !important;
+  filter: brightness(0.95);
 }
 
+body.nightMode #study.m3-hero-study-btn,
+body.nightMode .m3-hero-study-btn,
+body.night-mode #study.m3-hero-study-btn,
+body.night-mode .m3-hero-study-btn {
+  background: #a1c9ff !important;
+  color: #00325b !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+body.nightMode #study.m3-hero-study-btn:hover,
+body.nightMode .m3-hero-study-btn:hover,
+body.night-mode #study.m3-hero-study-btn:hover,
+body.night-mode .m3-hero-study-btn:hover {
+  background: #b8d6ff !important;
+  color: #00325b !important;
+  border: none !important;
+  filter: brightness(1.08);
+  box-shadow: 0 8px 24px rgba(161, 201, 255, 0.35) !important;
+}
+
+body.nightMode #study.m3-hero-study-btn:active,
+body.nightMode .m3-hero-study-btn:active,
+body.night-mode #study.m3-hero-study-btn:active,
+body.night-mode .m3-hero-study-btn:active {
+  background: #8ab7f8 !important;
+  color: #00325b !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+#study.m3-hero-study-btn:focus-visible,
 .m3-hero-study-btn:focus-visible {
   outline: 3px solid var(--m3-sys-color-primary);
   outline-offset: 3px;

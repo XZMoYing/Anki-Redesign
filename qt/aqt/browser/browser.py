@@ -120,6 +120,8 @@ class Browser(QMainWindow):
         mw: AnkiQt,
         card: Card | None = None,
         search: tuple[str | SearchNode] | None = None,
+        parent: QWidget | None = None,
+        window_type: Qt.WindowType = Qt.WindowType.Window,
     ) -> None:
         """
         card -- try to select the provided card after executing "search" or
@@ -127,7 +129,8 @@ class Browser(QMainWindow):
         search -- set and perform search; caller must ensure validity
         """
 
-        QMainWindow.__init__(self, None, Qt.WindowType.Window)
+        QMainWindow.__init__(self, parent, window_type)
+        self._is_embedded = window_type == Qt.WindowType.Widget
         self.mw = mw
         self.col = self.mw.col
         self.lastFilter = ""
@@ -163,9 +166,10 @@ class Browser(QMainWindow):
             if self.layoutDirection() == Qt.LayoutDirection.RightToLeft
             else "editor"
         )
-        restoreGeom(self, self._editor_state_key)
+        if not self._is_embedded:
+            restoreGeom(self, self._editor_state_key)
+            restoreState(self, self._editor_state_key)
         restoreSplitter(self.form.splitter, "editor3")
-        restoreState(self, self._editor_state_key)
 
         # responsive layout
         if self.height() != 0:
@@ -177,6 +181,10 @@ class Browser(QMainWindow):
         # legacy alias
         self.model = MockModel(self)
         self.setupSearch(card, search)
+        if self._is_embedded:
+            self.setWindowFlag(Qt.WindowType.Window, False)
+            self.setWindowFlag(Qt.WindowType.Widget, True)
+            self.setMenuBar(None)
         self.show()
 
     def on_operation_did_execute(
@@ -412,7 +420,19 @@ class Browser(QMainWindow):
         assert editor_web_view is not None
         return editor_web_view
 
+    def close(self) -> bool:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            return True
+        return super().close()
+
     def closeEvent(self, evt: QCloseEvent | None) -> None:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            if evt:
+                evt.ignore()
+            return
+
         assert evt is not None
 
         if self._closeEventHasCleanedUp:

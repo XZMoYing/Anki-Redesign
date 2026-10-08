@@ -35,8 +35,14 @@ from aqt.utils import (
 
 
 class AddCards(QMainWindow):
-    def __init__(self, mw: AnkiQt) -> None:
-        super().__init__(None, Qt.WindowType.Window)
+    def __init__(
+        self,
+        mw: AnkiQt,
+        parent: QWidget | None = None,
+        window_type: Qt.WindowType = Qt.WindowType.Window,
+    ) -> None:
+        super().__init__(parent, window_type)
+        self._is_embedded = window_type == Qt.WindowType.Widget
         self._close_event_has_cleaned_up = False
         self.mw = mw
         self.col = mw.col
@@ -53,10 +59,15 @@ class AddCards(QMainWindow):
         self.history: list[NoteId] = []
         self._last_added_note: Note | None = None
         gui_hooks.operation_did_execute.append(self.on_operation_did_execute)
-        restoreGeom(self, "add")
-        gui_hooks.add_cards_did_init(self)
-        if not is_mac:
+        if self._is_embedded:
+            self.setWindowFlag(Qt.WindowType.Window, False)
+            self.setWindowFlag(Qt.WindowType.Widget, True)
             self.setMenuBar(None)
+        else:
+            restoreGeom(self, "add")
+            if not is_mac:
+                self.setMenuBar(None)
+        gui_hooks.add_cards_did_init(self)
         self.show()
 
     def set_deck(self, deck_id: DeckId) -> None:
@@ -348,7 +359,17 @@ class AddCards(QMainWindow):
         else:
             super().keyPressEvent(evt)
 
+    def close(self) -> bool:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            return True
+        return super().close()
+
     def closeEvent(self, evt: QCloseEvent) -> None:
+        if getattr(self, "_is_embedded", False):
+            self.mw.switchToTab(0)
+            evt.ignore()
+            return
         if self._close_event_has_cleaned_up:
             evt.accept()
             return
